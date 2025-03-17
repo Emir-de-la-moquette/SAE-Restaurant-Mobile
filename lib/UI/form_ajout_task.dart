@@ -25,7 +25,7 @@ class _FormExampleState extends State<FormulaireAjoute> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
 
-          Text("nom de la tache",style:TextStyle(fontWeight: FontWeight.bold,fontSize: 20)),
+          const Text("nom de la tache",style:TextStyle(fontWeight: FontWeight.bold,fontSize: 20)),
           TextFormField(
             decoration: const InputDecoration(hintText: 'nom de la tache'),
             validator: (String? value) {
@@ -36,12 +36,12 @@ class _FormExampleState extends State<FormulaireAjoute> {
             },
           ),
 
-          Text("description",style:TextStyle(fontWeight: FontWeight.bold,fontSize: 20)),
+          const Text("description",style:TextStyle(fontWeight: FontWeight.bold,fontSize: 20)),
           TextFormField(
               decoration: const InputDecoration(hintText: 'Enter your description')
           ),
 
-          Text("tag"),
+          const Text("tag"),
           TextFormField(
             decoration: const InputDecoration(hintText: 'Enter your tag'),
             validator: (String? value) {
@@ -52,7 +52,7 @@ class _FormExampleState extends State<FormulaireAjoute> {
             },
           ),
 
-          Text("difficulty",style:TextStyle(fontWeight: FontWeight.bold,fontSize: 20)),
+          const Text("difficulty",style:TextStyle(fontWeight: FontWeight.bold,fontSize: 20)),
           TextFormField(
             decoration: const InputDecoration(hintText: 'Enter your difficulty'),
             validator: (String? value) {
@@ -63,7 +63,7 @@ class _FormExampleState extends State<FormulaireAjoute> {
             },
           ),
 
-          Text("number of hours",style:TextStyle(fontWeight: FontWeight.bold,fontSize: 20)),
+          const Text("number of hours",style:TextStyle(fontWeight: FontWeight.bold,fontSize: 20)),
           TextFormField(
             decoration: const InputDecoration(hintText: 'Enter your number of hours'),
             validator: (String? value) {

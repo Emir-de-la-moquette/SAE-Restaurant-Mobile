@@ -65,7 +65,7 @@ class MyTheme {
     return ThemeData(
       brightness: Brightness.light,
       checkboxTheme: CheckboxThemeData(
-        fillColor: MaterialStateColor.resolveWith(
+        fillColor: WidgetStateColor.resolveWith(
               (states) {
             return Colors.black;
           },
