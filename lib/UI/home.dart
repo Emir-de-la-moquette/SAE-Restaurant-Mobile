@@ -1,65 +1,75 @@
 import 'package:flutter/material.dart';
-import 'ecran_one.dart';
-import 'ecran_two.dart';
-import 'ecran_three.dart';
-import 'ecran_four.dart';
-import 'add_task.dart';
+import 'package:td2/UI/addtask.dart';
+import 'package:td2/UI/card1.dart';
+import 'package:td2/UI/card2.dart';
+import 'package:td2/UI/card3.dart';
+import 'package:td2/UI/settings.dart';
+import 'package:td2/UI/addtaskv2.dart';
 
 class Home extends StatefulWidget {
 
-  const Home({super.key});
-
   @override
-  State<Home> createState() => _MyWidgetState();
+  State<Home> createState() => _HomeState();
 }
 
-class _MyWidgetState extends State<Home> {
+class _HomeState extends State<Home> {
   int _selectedIndex = 0;
 
-  List<Widget> pages = <Widget>[
+  static List<Widget> pages = <Widget>[
     Ecran1(),
     Ecran2(),
     Ecran3(),
-    const Ecran4()
+    EcranSettings()
   ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text("TD2", style: Theme.of(context).appBarTheme.titleTextStyle)),
-      body:
-      pages[_selectedIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: Theme.of(context).textSelectionTheme.selectionColor,
-        unselectedItemColor:Theme.of(context).bottomNavigationBarTheme.unselectedItemColor,
-
-        onTap: _cliqueSurItem,
-        currentIndex: _selectedIndex,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.article), label: 'Ecran 1',),
-          BottomNavigationBarItem(icon: Icon(Icons.article), label: 'Ecran 2',),
-          BottomNavigationBarItem(icon: Icon(Icons.article), label: 'Ecran 3',),
-          BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Settings')
-        ],
+        title: Text("App td2", style: Theme.of(context).textTheme.headlineLarge)
       ),
-
-      /*tp3*/
+      body: Center(
+        //child: Text("Debut td2", style: Theme.of(context).textTheme.bodyMedium,),
+        child: pages[_selectedIndex],
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _selectedIndex,
+        onTap: _onItemTapped,
+        selectedItemColor: Theme.of(context).textSelectionTheme.selectionColor,
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.article),
+            label: 'Card 1'
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.article),
+            label: 'Card 2'
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.article),
+            label: 'Card 3'
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings),
+            label: 'Settings'
+          )
+        ]
+      ),
       floatingActionButton: _selectedIndex==0?FloatingActionButton(
-        onPressed: (){ Navigator.push(context,
-                                      MaterialPageRoute(
-                                              builder: (context) => const AddTask(),
-                                      ));
-                      },
-        child: const Icon(Icons.add),):const SizedBox.shrink(),
+        onPressed: () {
+            Navigator.push(context, MaterialPageRoute(
+              builder: (context) => AddTaskV2(),
+            )
+          );
+        },
+        child: const Icon(Icons.add),
+      )
+      :const SizedBox.shrink(),
     );
-  }
-
-  void _cliqueSurItem(int value) {
-    setState(() {
-      _selectedIndex = value;
-    });
-  }
-
-}
-
+  }}
