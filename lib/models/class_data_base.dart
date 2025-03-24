@@ -1,6 +1,7 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 import './note.dart';
 import './restaurant.dart';
+import './favories.dart';
 
 class NoteDataBase{
   final database = Supabase.instance.client.from("noter");
@@ -83,6 +84,36 @@ class RestaurantDataBase{
     await database.delete().eq('osmid',restaurant.osmId!);
   }
 
+}
+
+
+class FavoriesDataBase{
+  final database = Supabase.instance.client.from("favori");
+
+  //creation
+  Future createNote(Favories newFavories) async{
+    await database.insert(newFavories.toMap());
+  }
+
+  //read
+  final stream =Supabase.instance.client.from("favori").stream(primaryKey: ['osmid','emailpersonne'],
+  ).map((data) => data.map((noteMap) => Restaurant.fromMap(noteMap))).toList();
+
+  //Update
+  Future UpdateNote(Favories oldFavories,Favories newFavories) async{
+    await database.update({
+      "osmid":newFavories.osmId,
+      "nomrestaurant" :newFavories.mail,
+
+    }).eq('osmid',oldFavories.osmId!);
+  }
+
+  //delect
+  Future DelectNote(Favories favories) async{
+    await database.delete().eq('osmid',favories.osmId!);
+  }
+
+  //voir pour double clef primaire
 
 
 }

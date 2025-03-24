@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sqflite_common_ffi_web/sqflite_ffi_web.dart';
 import 'package:td2/viewmodels/settingsviewmodels.dart';
-import 'package:td2/viewmodels/taskviewmodels.dart';
 import 'dart:async';
 import 'package:flutter/widgets.dart';
 import 'package:path/path.dart';
@@ -42,11 +41,11 @@ class MyApp extends StatelessWidget {
               return settingViewModel;
             }),
         ChangeNotifierProvider(
-            create:(_){
-              TaskViewModel taskViewModel = TaskViewModel();
-              taskViewModel.generateTasks();
-              return taskViewModel;
-            } )
+            create: (_){
+              SettingViewModel settingViewModel = SettingViewModel();
+              //getSettings est deja appelee dans le constructeur
+              return settingViewModel;
+            }),
       ],
       child: Consumer<SettingViewModel>(
         builder: (context,SettingViewModel notifier,child){
