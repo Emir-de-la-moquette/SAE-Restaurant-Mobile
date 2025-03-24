@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'UI/mytheme.dart';
+import 'mytheme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'main.dart';
-import 'model.dart';
+import '../main.dart';
+import '../models/model.dart';
 
 void main() {
   runApp(MyApp());

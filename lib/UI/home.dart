@@ -5,7 +5,7 @@ import 'ecran_three.dart';
 import 'ecran_four.dart';
 import 'add_task.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../connect.dart';
+import 'connect.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
