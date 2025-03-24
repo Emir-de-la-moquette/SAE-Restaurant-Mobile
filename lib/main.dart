@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:sqflite_common_ffi_web/sqflite_ffi_web.dart';
 import 'package:td2/UI/home.dart';
@@ -29,13 +30,50 @@ Future<void> main() async {
   runApp(MyApp(database: db,));
 }
 
+final GoRouter router = GoRouter(
+    initialLocation: '/connexion',
+    routes: [
+        GoRoute(
+            name: 'home',
+            path: '/',
+            builder: (context, state) => Home()),
+        GoRoute(
+            name: 'connexion',
+            path: '/connexion',
+            builder: (context, state) => Home()),
+        GoRoute(
+            name: 'favoris',
+            path: '/favoris',
+            builder: (context, state) => Home()),
+        GoRoute(
+            name: 'restaurants',
+            path: '/restaurant',
+            builder: (context, state) => Home()),
+        GoRoute(
+            name: 'restaurant',
+            path: '/restaurant/:id',
+            builder: (context, state) => Home()),
+        GoRoute(
+            name: 'images',
+            path: '/images',
+            builder: (context, state) => Home()),
+        GoRoute(
+            name: 'profil',
+            path: '/profil',
+            builder: (context, state) => Home()),
+    ]
+);
+
+
+
 class MyApp extends StatelessWidget {
   late final Database database;
 
   MyApp({required this.database});
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
+    return
+      MultiProvider(
       providers: [
         ChangeNotifierProvider(
             create: (_){
@@ -52,10 +90,9 @@ class MyApp extends StatelessWidget {
       ],
       child: Consumer<SettingViewModel>(
         builder: (context,SettingViewModel notifier,child){
-          return MaterialApp(
-              theme: notifier.isDark ? MyTheme.dark():MyTheme.light(),
-              title: 'TD2',
-              home: Home()
+          return MaterialApp.router(
+            title: 'test',
+            routerConfig: router,
           );
         },
       ),
