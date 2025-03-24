@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:my_little_food/viewmodel/setting_view_model.dart';
-import 'package:provider/provider.dart';
-import 'package:my_little_food/viewmodel/task_view_model.dart';
-import 'UI/home.dart';
 import 'UI/mytheme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'home_screen.dart';
+import 'main.dart';
+import 'model.dart';
 
 void main() {
   runApp(MyApp());
@@ -36,17 +33,15 @@ class _LoginScreenState extends State<LoginScreen> {
       String email = _emailController.text;
       String password = _passwordController.text;
 
-      if (email == "test@mail.com" && password == "123456") {
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        int expirationDate =
-            DateTime.now().add(Duration(days: 7)).millisecondsSinceEpoch;
-        await prefs.setInt('expiration', expirationDate);
-
+      if (userExist(email, password)) {
+        refreshPref(7);
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text("Connexion réussie 🎉")),
         );
         Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (_) => HomeScreen()));
+            // context, MaterialPageRoute(builder: (_) => HomeScreen()));
+            context,
+            MaterialPageRoute(builder: (_) => AppMLF()));
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text("Identifiants incorrects ❌")),
@@ -69,14 +64,21 @@ class _LoginScreenState extends State<LoginScreen> {
     if (expirationDate != null) {
       if (DateTime.now().millisecondsSinceEpoch < expirationDate) {
         // Rester connecté
+        refreshPref(7);
 
         Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (_) => HomeScreen()));
+            context, MaterialPageRoute(builder: (_) => AppMLF()));
       } else {
-        // Supprimer l'état de connexion expiré
         await prefs.remove('expiration');
       }
     }
+  }
+
+  void refreshPref(int jours) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    int expirationDate =
+        DateTime.now().add(Duration(days: jours)).millisecondsSinceEpoch;
+    await prefs.setInt('expiration', expirationDate);
   }
 
   @override
