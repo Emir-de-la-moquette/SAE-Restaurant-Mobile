@@ -170,7 +170,7 @@ class RestaurantUI extends StatelessWidget {
     );
   }
 
-  void setState() {
+  void setState() {// a suppr et remplacé par le lien à la BD
     isFavorite = !isFavorite;
   }
 }
