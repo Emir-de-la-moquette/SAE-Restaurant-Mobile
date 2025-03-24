@@ -12,6 +12,11 @@ import 'package:flutter/widgets.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
+import 'UI/card1.dart';
+import 'UI/card2.dart';
+import 'UI/card3.dart';
+import 'UI/settings.dart';
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   if(kIsWeb){
@@ -31,37 +36,51 @@ Future<void> main() async {
 }
 
 final GoRouter router = GoRouter(
-    initialLocation: '/connexion',
-    routes: [
+  initialLocation: '/connexion',
+  routes: [
+    ShellRoute(
+      builder: (context, state, child) {
+        return Home(child: child); // Home garde la NavBar et affiche le `child`
+      },
+      routes: [
         GoRoute(
-            name: 'home',
-            path: '/',
-            builder: (context, state) => Home()),
+          name: 'home',
+          path: '/',
+          builder: (context, state) => Ecran1(),
+        ),
         GoRoute(
-            name: 'connexion',
-            path: '/connexion',
-            builder: (context, state) => Home()),
+          name: 'connexion',
+          path: '/connexion',
+          builder: (context, state) => Ecran1(),
+        ),
         GoRoute(
-            name: 'favoris',
-            path: '/favoris',
-            builder: (context, state) => Home()),
+          name: 'favoris',
+          path: '/favoris',
+          builder: (context, state) => Ecran3(),
+        ),
         GoRoute(
-            name: 'restaurants',
-            path: '/restaurant',
-            builder: (context, state) => Home()),
+          name: 'restaurants',
+          path: '/restaurant',
+          builder: (context, state) => Ecran3(),
+        ),
         GoRoute(
-            name: 'restaurant',
-            path: '/restaurant/:id',
-            builder: (context, state) => Home()),
+          name: 'restaurant',
+          path: '/restaurant/:id',
+          builder: (context, state) => Ecran3(),
+        ),
         GoRoute(
-            name: 'images',
-            path: '/images',
-            builder: (context, state) => Home()),
+          name: 'images',
+          path: '/images',
+          builder: (context, state) => Ecran2(),
+        ),
         GoRoute(
-            name: 'profil',
-            path: '/profil',
-            builder: (context, state) => Home()),
-    ]
+          name: 'profil',
+          path: '/profil',
+          builder: (context, state) => EcranSettings(),
+        ),
+      ],
+    ),
+  ],
 );
 
 
