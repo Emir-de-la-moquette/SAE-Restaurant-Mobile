@@ -1,5 +1,6 @@
 import 'package:intl/intl.dart';
-class Note{
+
+class Note {
   String mail;
   int note;
   String commentaire;
@@ -7,16 +8,15 @@ class Note{
   String nomAuteur;
   String prenomAuteur;
 
-  Note({
-    required this.mail,
-    required this.note,
-    required this.commentaire,
-    required this.date,
-    required this.nomAuteur,
-    required this.prenomAuteur
-  });
+  Note(
+      {required this.mail,
+      required this.note,
+      required this.commentaire,
+      required this.date,
+      required this.nomAuteur,
+      required this.prenomAuteur});
 
-  String getDateDiff(){
+  String getDateDiff() {
     DateTime date = DateFormat("yyyy-MM-dd").parse(this.date);
     DateTime now = DateTime.now();
     Duration difference = now.difference(date);
@@ -32,5 +32,11 @@ class Note{
     } else {
       return "$days jours";
     }
+  }
+
+  String getInitiale() {
+    String a = this.prenomAuteur[0];
+    String b = this.nomAuteur[0];
+    return "${a} ${b}";
   }
 }
