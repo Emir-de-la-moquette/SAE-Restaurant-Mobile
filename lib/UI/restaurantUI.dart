@@ -5,6 +5,8 @@ import 'package:my_little_food/models/note.dart';
 import 'package:my_little_food/models/restaurant.dart';
 import 'package:provider/provider.dart';
 
+import 'commentaireUI.dart';
+
 class RestaurantUI extends StatelessWidget {
   bool isFavorite = true;
   late Restaurant resto = Restaurant(
@@ -54,9 +56,9 @@ class RestaurantUI extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Row(
+      child: Column(
         children: [
-          Column(
+          Row(
             children: [
               RatingScreen(),
               IconButton(
@@ -78,7 +80,7 @@ class RestaurantUI extends StatelessWidget {
             this.resto.nomRestaurant,
             style: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold),
           ),
-          Column(
+          Row(
             children: [
               Text(this.resto.description,
                 style: TextStyle(
@@ -105,7 +107,7 @@ class RestaurantUI extends StatelessWidget {
             style: TextStyle(fontSize: 15, color: Colors.grey),
           ),
           //Ici le code d'affichage des images
-          Column(
+          Row(
             children: [
               Text(
                 "Commentaires",
@@ -126,53 +128,15 @@ class RestaurantUI extends StatelessWidget {
               )
             ],
           ),
-          ListView.builder(
-            itemCount: this.resto.notes.length,
-            itemBuilder: (BuildContext context, int index){
-              Card(
-                elevation: 7,
-                margin: const EdgeInsets.all(10),
-                child: ListTile(
-                  leading: CircleAvatar(
-                    backgroundColor: Colors.lightBlue,
-                    child: Text(this.resto.notes[index].getInitiale()),
-                  ),
-                  title: Column(
-                    children: [
-                      Text(
-                        "${this.resto.notes[index].prenomAuteur} ${this.resto.notes[index].nomAuteur}",
-                        style: TextStyle(
-                          fontSize: 20, color: Colors.grey
-                        ),
-                      ),
-                      Text(
-                        this.resto.notes[index].getDateDiff(),
-                        style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w200,
-                          color: Colors.grey
-                        ),
-                      )
-                    ],
-                  ),
-                  subtitle: Text(
-                    this.resto.notes[index].commentaire,
-                    style: TextStyle(
-                      fontSize: 18
-                    ),
-                  ),
-                ),
-              );
-            }
-          )
+          //CommentaireUI(notes: this.resto.notes)
         ]
       )
     );
   }
-
   void setState() {// a suppr et remplacé par le lien à la BD
     isFavorite = !isFavorite;
   }
 }
+
 
 
