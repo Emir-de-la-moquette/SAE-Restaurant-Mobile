@@ -4,9 +4,15 @@ import 'package:google_fonts/google_fonts.dart';
 class MyTheme {
   // 1
   static TextTheme lightTextTheme = TextTheme(
-    bodyLarge: GoogleFonts.openSans(
+
+    bodyMedium: GoogleFonts.openSans(
       fontSize: 14.0,
       fontWeight: FontWeight.w700,
+      color: Colors.black
+    ),
+    bodyLarge: GoogleFonts.openSans(
+      fontSize: 16.0,
+      fontWeight: FontWeight.w600,
       color: Colors.black,
     ),
     displayLarge: GoogleFonts.openSans(
@@ -81,11 +87,8 @@ class MyTheme {
       ),
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(
         selectedItemColor: Colors.green,
-        unselectedItemColor: Colors.black,
-
       ),
       textTheme: lightTextTheme,
-
     );
   }
 
@@ -103,10 +106,8 @@ class MyTheme {
       ),
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(
         selectedItemColor: Colors.green,
-        unselectedItemColor: Colors.white,
       ),
       textTheme: darkTextTheme,
-
     );
   }
 }
