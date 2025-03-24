@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 
-class Note{
+class Note {
   String mail;
   int note;
   String commentaire;
@@ -19,7 +19,7 @@ class Note{
     required this.prenomAuteur
   });
 
-  String getDateDiff(){
+  String getDateDiff() {
     DateTime date = DateFormat("yyyy-MM-dd").parse(this.date);
     DateTime now = DateTime.now();
     Duration difference = now.difference(date);
@@ -37,7 +37,7 @@ class Note{
     }
   }
 
-  factory Note.fromMap(Map<String,dynamic> map){
+  factory Note.fromMap(Map<String, dynamic> map){
     return Note(
       note: map['note'] as int,
       mail: map['emailpersonne'] as String,
@@ -49,17 +49,14 @@ class Note{
   }
 
 
-  Map<String,dynamic> toMap(){
+  Map<String, dynamic> toMap() {
     return {
-      "note":note,
+      "note": note,
       "mail": mail,
-      "commentaire":commentaire ,
+      "commentaire": commentaire,
       "date": date,
-      "nomAuteur":nomAuteur ,
-      "prenomAuteur":prenomAuteur  ,
+      "nomAuteur": nomAuteur,
+      "prenomAuteur": prenomAuteur,
     };
-
-
-
+  }
 }
-

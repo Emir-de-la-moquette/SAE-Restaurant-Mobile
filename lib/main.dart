@@ -2,8 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sqflite_common_ffi_web/sqflite_ffi_web.dart';
-import 'package:td2/UI/home.dart';
-import 'package:td2/UI/mytheme.dart';
 import 'package:td2/viewmodels/settingsviewmodels.dart';
 import 'package:td2/viewmodels/taskviewmodels.dart';
 import 'dart:async';

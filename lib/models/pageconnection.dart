@@ -1,3 +1,13 @@
+
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+
+
+
+import 'package:supabase_flutter/supabase_flutter.dart';
+
+
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
