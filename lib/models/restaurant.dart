@@ -55,3 +55,4 @@ class Restaurant{
     return this.notes.length;
   }
 }
+

@@ -1,8 +1,14 @@
 
 import 'package:crypto/crypto.dart';
 
+import 'dart:async';
+
+import 'package:flutter/widgets.dart';
+import 'package:path/path.dart';
 
 
+import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:sqflite/sqflite.dart';
 import 'dart:convert';
 import './restaurant.dart';
 import 'dart:convert';
@@ -11,6 +17,18 @@ import 'dart:io';
 
 
 Future<PostgreSQLConnection> createConnection() async {
+
+  WidgetsFlutterBinding.ensureInitialized();
+
+  Future<void> connection() async {
+    await Supabase.initialize(
+      url: 'https://vicnhizlpnnchlerpqtr.supabase.co',
+      anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZpY25oaXpscG5uY2hsZXJwcXRyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzczOTAyMjcsImV4cCI6MjA1Mjk2NjIyN30.3IrL5w_zVj6vL9iD3wlpb-kAALGZvFN_TXZgYMPMzag',
+    );
+
+  }
+
+
   final connection = PostgreSQLConnection(
     'aws-0-eu-west-3.pooler.supabase.com',
     5432,
