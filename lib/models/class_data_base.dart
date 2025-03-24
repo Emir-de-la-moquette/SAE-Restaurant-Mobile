@@ -43,7 +43,7 @@ class RestaurantDataBase{
   final database = Supabase.instance.client.from("restaurant");
 
   //creation
-  Future createNote(Restaurant newRestaurant) async{
+  Future createRestaurant(Restaurant newRestaurant) async{
     await database.insert(newRestaurant.toMap());
   }
 
@@ -52,7 +52,7 @@ class RestaurantDataBase{
   ).map((data) => data.map((noteMap) => Restaurant.fromMap(noteMap))).toList();
 
   //Update
-  Future UpdateNote(Restaurant oldRestaurant,Restaurant newRestaurant) async{
+  Future UpdateRestaurant(Restaurant oldRestaurant,Restaurant newRestaurant) async{
     await database.update({
       "osmid":newRestaurant.osmId,
       "nomrestaurant" :newRestaurant.nomRestaurant,
@@ -80,7 +80,7 @@ class RestaurantDataBase{
   }
 
   //delect
-  Future DelectNote(Restaurant restaurant) async{
+  Future DelectRestaurant(Restaurant restaurant) async{
     await database.delete().eq('osmid',restaurant.osmId!);
   }
 
@@ -91,16 +91,16 @@ class FavoriesDataBase{
   final database = Supabase.instance.client.from("favori");
 
   //creation
-  Future createNote(Favories newFavories) async{
+  Future createFavories(Favories newFavories) async{
     await database.insert(newFavories.toMap());
   }
 
   //read
   final stream =Supabase.instance.client.from("favori").stream(primaryKey: ['osmid','emailpersonne'],
-  ).map((data) => data.map((noteMap) => Restaurant.fromMap(noteMap))).toList();
+  ).map((data) => data.map((noteMap) => Favories.fromMap(noteMap))).toList();
 
   //Update
-  Future UpdateNote(Favories oldFavories,Favories newFavories) async{
+  Future UpdateFavories(Favories oldFavories,Favories newFavories) async{
     await database.update({
       "osmid":newFavories.osmId,
       "nomrestaurant" :newFavories.mail,
@@ -109,7 +109,7 @@ class FavoriesDataBase{
   }
 
   //delect
-  Future DelectNote(Favories favories) async{
+  Future DelectFavories(Favories favories) async{
     await database.delete().eq('osmid',favories.osmId!);
   }
 
