@@ -35,6 +35,8 @@ class _HomeState extends State<Home> {
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
         selectedItemColor: Colors.blue,
+        unselectedItemColor: Colors.grey,
+
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.restaurant), label: 'Restaurants'),
           BottomNavigationBarItem(icon: Icon(Icons.image_outlined), label: 'Mes Images'),
