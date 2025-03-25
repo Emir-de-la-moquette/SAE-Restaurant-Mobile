@@ -13,6 +13,8 @@ class RestaurantUI extends StatefulWidget {
 
 class _RestaurantUIState extends State<RestaurantUI> {
   bool isFavorite = false; // Gère l'état du favori
+  final TextEditingController _commentController = TextEditingController();
+  double _userRating = 0; // Valeur par défaut de la note
 
   // Simule les données d'un restaurant (à remplacer avec les vraies données de la BD)
   late Restaurant resto = Restaurant(
@@ -56,6 +58,26 @@ class _RestaurantUIState extends State<RestaurantUI> {
     ],
   );
 
+  /// 🔹 Fonction pour ajouter un commentaire
+  void _ajouterCommentaire() {
+    String commentaire = _commentController.text.trim();
+
+    if (commentaire.isNotEmpty && _userRating > 0) {
+      setState(() {
+        resto.notes.add(Note(
+          mail: "nouveau.client@example.com", // À remplacer par le vrai utilisateur
+          note: _userRating.toInt(),
+          commentaire: commentaire,
+          date: DateTime.now().toString().split(' ')[0], // Date du jour
+          nomAuteur: "Nouveau",
+          prenomAuteur: "Client",
+        ));
+        _commentController.clear();
+        _userRating = 0; // Réinitialiser la note
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -68,7 +90,6 @@ class _RestaurantUIState extends State<RestaurantUI> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                RatingScreen(), // Composant de notation
                 IconButton(
                   icon: Icon(
                     isFavorite ? Icons.favorite : Icons.favorite_border,
@@ -144,6 +165,47 @@ class _RestaurantUIState extends State<RestaurantUI> {
                 const SizedBox(width: 4),
                 const Icon(Icons.question_answer_rounded),
               ],
+            ),
+
+            /// 📝 **Formulaire d'ajout de commentaire**
+            Container(
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: Colors.grey[200],
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  /// ⭐ **Sélection de la note**
+                  const Text("Note :", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                  RatingScreen(
+                    onRatingUpdate: (rating) {
+                      setState(() {
+                        _userRating = rating; // Stocke la note sélectionnée
+                      });
+                    },
+                  ),
+                  const SizedBox(height: 10),
+
+                  /// 📝 **Champ de texte pour le commentaire**
+                  TextField(
+                    controller: _commentController,
+                    decoration: InputDecoration(
+                      hintText: "Écrire un commentaire...",
+                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                    ),
+                    maxLines: 3,
+                  ),
+                  const SizedBox(height: 10),
+
+                  /// ✅ **Bouton d'envoi du commentaire**
+                  ElevatedButton(
+                    onPressed: _ajouterCommentaire,
+                    child: const Text("Envoyer"),
+                  ),
+                ],
+              ),
             ),
 
             /// 📩 Liste des commentaires
