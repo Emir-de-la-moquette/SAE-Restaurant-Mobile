@@ -15,6 +15,7 @@ import 'package:sqflite/sqflite.dart';
 import 'UI/card1.dart';
 import 'UI/card2.dart';
 import 'UI/card3.dart';
+import 'UI/connect.dart';
 import 'UI/settings.dart';
 
 Future<void> main() async {
@@ -38,19 +39,19 @@ Future<void> main() async {
 final GoRouter router = GoRouter(
   initialLocation: '/connexion',
   routes: [
+    GoRoute(
+      name: 'connexion',
+      path: '/connexion',
+      builder: (context, state) => LoginScreen(),
+    ),
     ShellRoute(
       builder: (context, state, child) {
-        return Home(child: child); // Home garde la NavBar et affiche le `child`
+        return Home(child: child);
       },
       routes: [
         GoRoute(
           name: 'home',
           path: '/',
-          builder: (context, state) => Ecran1(),
-        ),
-        GoRoute(
-          name: 'connexion',
-          path: '/connexion',
           builder: (context, state) => Ecran1(),
         ),
         GoRoute(
@@ -112,6 +113,8 @@ class MyApp extends StatelessWidget {
           return MaterialApp.router(
             title: 'test',
             routerConfig: router,
+            theme: MyTheme.dark(),
+            darkTheme: MyTheme.dark(),
           );
         },
       ),

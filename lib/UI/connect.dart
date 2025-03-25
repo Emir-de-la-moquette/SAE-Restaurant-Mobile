@@ -1,22 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'home.dart';
 import 'mytheme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../main.dart';
 import '../models/model.dart';
-
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: LoginScreen(),
-    );
-  }
-}
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -38,10 +26,7 @@ class _LoginScreenState extends State<LoginScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text("Connexion réussie 🎉")),
         );
-        Navigator.pushReplacement(
-            // context, MaterialPageRoute(builder: (_) => HomeScreen()));
-            context,
-            MaterialPageRoute(builder: (_) => AppMLF()));
+        context.go('/');
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text("Identifiants incorrects ❌")),
@@ -66,8 +51,7 @@ class _LoginScreenState extends State<LoginScreen> {
         // Rester connecté
         refreshPref(7);
 
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (_) => AppMLF()));
+        context.go('/');
       } else {
         await prefs.remove('expiration');
       }
