@@ -1,65 +1,49 @@
 import 'package:flutter/material.dart';
-import 'ecran_one.dart';
-import 'ecran_two.dart';
-import 'ecran_three.dart';
-import 'ecran_four.dart';
-import 'add_task.dart';
+import 'package:go_router/go_router.dart';
 
 class Home extends StatefulWidget {
-
-  const Home({super.key});
+  final Widget child;
+  const Home({Key? key, required this.child}) : super(key: key);
 
   @override
-  State<Home> createState() => _MyWidgetState();
+  State<Home> createState() => _HomeState();
 }
 
-class _MyWidgetState extends State<Home> {
+class _HomeState extends State<Home> {
   int _selectedIndex = 0;
 
-  List<Widget> pages = <Widget>[
-    Ecran1(),
-    Ecran2(),
-    Ecran3(),
-    const Ecran4()
+  static const List<String> routes = [
+    '/',
+    '/favoris',
+    '/restaurant',
+    '/profil'
   ];
+
+  void _onItemTapped(int index) {
+    context.go(routes[index]);
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          title: Text("TD2", style: Theme.of(context).appBarTheme.titleTextStyle)),
-      body:
-      pages[_selectedIndex],
+      appBar: AppBar(title: Text("App td2")),
+      body: widget.child,
       bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: Theme.of(context).textSelectionTheme.selectionColor,
-        unselectedItemColor:Theme.of(context).bottomNavigationBarTheme.unselectedItemColor,
-
-        onTap: _cliqueSurItem,
         currentIndex: _selectedIndex,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.article), label: 'Ecran 1',),
-          BottomNavigationBarItem(icon: Icon(Icons.article), label: 'Ecran 2',),
-          BottomNavigationBarItem(icon: Icon(Icons.article), label: 'Ecran 3',),
-          BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Settings')
+        onTap: _onItemTapped,
+        selectedItemColor: Colors.blue,
+        unselectedItemColor: Colors.grey,
+
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.restaurant), label: 'Restaurants'),
+          BottomNavigationBarItem(icon: Icon(Icons.image_outlined), label: 'Mes Images'),
+          BottomNavigationBarItem(icon: Icon(Icons.favorite), label: 'Favoris'),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profil'),
         ],
       ),
-
-      /*tp3*/
-      floatingActionButton: _selectedIndex==0?FloatingActionButton(
-        onPressed: (){ Navigator.push(context,
-                                      MaterialPageRoute(
-                                              builder: (context) => const AddTask(),
-                                      ));
-                      },
-        child: const Icon(Icons.add),):const SizedBox.shrink(),
     );
   }
-
-  void _cliqueSurItem(int value) {
-    setState(() {
-      _selectedIndex = value;
-    });
-  }
-
 }
-
