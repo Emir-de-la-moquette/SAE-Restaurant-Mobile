@@ -7,7 +7,7 @@ class RatingScreen extends StatefulWidget {
 }
 
 class _RatingScreenState extends State<RatingScreen> {
-  double _rating = 3.0; // Valeur par défaut
+  double _rating = 0; // Valeur par défaut
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +15,7 @@ class _RatingScreenState extends State<RatingScreen> {
       initialRating: _rating,
       minRating: 1,
       direction: Axis.horizontal,
-      allowHalfRating: true,
+      allowHalfRating: false,
       itemCount: 5,
       itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
       itemBuilder: (context, _) => Icon(

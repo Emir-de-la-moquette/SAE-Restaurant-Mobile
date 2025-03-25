@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_little_food/UI/restaurantUI.dart';
+//import 'package:my_little_food/UI/restaurant_ui.dart';
 import 'ecran_one.dart';
 import 'ecran_two.dart';
 import 'ecran_three.dart';
@@ -18,7 +18,7 @@ class _MyWidgetState extends State<Home> {
   int _selectedIndex = 0;
 
   List<Widget> pages = <Widget>[
-    RestaurantUI(),
+    Ecran1(),
     Ecran2(),
     Ecran3(),
     const Ecran4()
