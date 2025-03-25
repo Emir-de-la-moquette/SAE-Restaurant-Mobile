@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:sqflite_common_ffi_web/sqflite_ffi_web.dart';
@@ -19,6 +20,10 @@ import 'UI/connect.dart';
 import 'UI/settings.dart';
 
 Future<void> main() async {
+  Position position = await Geolocator.getCurrentPosition(
+      desiredAccuracy: LocationAccuracy.high);
+  print(position);
+
   WidgetsFlutterBinding.ensureInitialized();
   if(kIsWeb){
     databaseFactory = databaseFactoryFfiWeb;
@@ -33,7 +38,7 @@ Future<void> main() async {
     }
   );
   final db = await database;
-  runApp(MyApp(database: db,));
+  runApp(MyApp(database: db, position: position));
 }
 
 final GoRouter router = GoRouter(
@@ -88,10 +93,12 @@ final GoRouter router = GoRouter(
 
 class MyApp extends StatelessWidget {
   late final Database database;
+  late final Position position;
 
-  MyApp({required this.database});
+  MyApp({required this.database, required this.position});
   @override
   Widget build(BuildContext context) {
+    print(position);
     return
       MultiProvider(
       providers: [
