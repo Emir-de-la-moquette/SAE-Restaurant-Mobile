@@ -4,15 +4,11 @@ import 'package:provider/provider.dart';
 import '../models/task.dart';
 import '../viewmodel/task_view_model.dart';
 import 'detail.dart';
-
 class Ecran1 extends StatelessWidget{
-
   //final List<Task> myTasks = Task.generateTask(5);
   late List<Task> myTasks = Task.generateTask(6);
   String tags='';
-
   Ecran1({super.key});
-
   @override
   Widget build(BuildContext context) {
     myTasks = context.watch<TaskViewModel>().liste;
