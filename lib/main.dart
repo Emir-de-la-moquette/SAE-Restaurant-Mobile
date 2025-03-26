@@ -17,6 +17,7 @@ import 'UI/card1.dart';
 import 'UI/card2.dart';
 import 'UI/card3.dart';
 import 'UI/connect.dart';
+import 'UI/map.dart';
 import 'UI/settings.dart';
 
 Future<void> main() async {
@@ -38,67 +39,62 @@ Future<void> main() async {
     }
   );
   final db = await database;
-  runApp(MyApp(database: db, position: position));
+  runApp(MyApp(database: db));
 }
-
-final GoRouter router = GoRouter(
-  initialLocation: '/connexion',
-  routes: [
-    GoRoute(
-      name: 'connexion',
-      path: '/connexion',
-      builder: (context, state) => LoginScreen(),
-    ),
-    ShellRoute(
-      builder: (context, state, child) {
-        return Home(child: child);
-      },
-      routes: [
-        GoRoute(
-          name: 'home',
-          path: '/',
-          builder: (context, state) => Ecran1(),
-        ),
-        GoRoute(
-          name: 'favoris',
-          path: '/favoris',
-          builder: (context, state) => Ecran3(),
-        ),
-        GoRoute(
-          name: 'restaurants',
-          path: '/restaurant',
-          builder: (context, state) => Ecran3(),
-        ),
-        GoRoute(
-          name: 'restaurant',
-          path: '/restaurant/:id',
-          builder: (context, state) => Ecran3(),
-        ),
-        GoRoute(
-          name: 'images',
-          path: '/images',
-          builder: (context, state) => Ecran2(),
-        ),
-        GoRoute(
-          name: 'profil',
-          path: '/profil',
-          builder: (context, state) => EcranSettings(),
-        ),
-      ],
-    ),
-  ],
-);
-
-
 
 class MyApp extends StatelessWidget {
   late final Database database;
-  late final Position position;
+  final GoRouter router = GoRouter(
+    initialLocation: '/connexion',
+    routes: [
+      GoRoute(
+        name: 'connexion',
+        path: '/connexion',
+        builder: (context, state) => LoginScreen(),
+      ),
+      ShellRoute(
+        builder: (context, state, child) {
+          return Home(child: child);
+        },
+        routes: [
+          GoRoute(
+            name: 'home',
+            path: '/',
+            builder: (context, state) => Ecran1(),
+          ),
+          GoRoute(
+            name: 'favoris',
+            path: '/favoris',
+            builder: (context, state) => Mapmoi(),
+          ),
+          GoRoute(
+            name: 'restaurants',
+            path: '/restaurant',
+            builder: (context, state) => Ecran3(),
+          ),
+          GoRoute(
+            name: 'restaurant',
+            path: '/restaurant/:id',
+            builder: (context, state) => Ecran3(),
+          ),
+          GoRoute(
+            name: 'images',
+            path: '/images',
+            builder: (context, state) => Ecran2(),
+          ),
+          GoRoute(
+            name: 'profil',
+            path: '/profil',
+            builder: (context, state) => EcranSettings(),
+          ),
+        ],
+      ),
+    ],
+  );
 
-  MyApp({required this.database, required this.position});
+  MyApp({required this.database});
   @override
   Widget build(BuildContext context) {
-    print(position);
     return
       MultiProvider(
       providers: [
