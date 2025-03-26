@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:my_little_food/models/note.dart';
+
+import '../models/note.dart';
 
 class CommentaireUI extends StatelessWidget {
   final List<Note> notes;
