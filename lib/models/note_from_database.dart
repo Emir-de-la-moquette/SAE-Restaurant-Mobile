@@ -11,8 +11,12 @@ class NoteDataBase{
   }
 
   //read
-  final stream =Supabase.instance.client.from("noter").stream(primaryKey: ['emailpersonne'],
-  ).map((data) => data.map((noteMap) => Note.fromMap(noteMap))).toList();
+  Stream<List<Note>> get_stream() {
+    return Supabase.instance.client
+        .from("noter")
+        .stream(primaryKey: ['emailpersonne']) // Écoute les changements
+        .map((data) => data.map((noteMap) => Note.fromMap(noteMap)).toList()); // Transforme les données
+  }
 
   //Update
   Future UpdateNote(Note oldNote,Note newNote) async{

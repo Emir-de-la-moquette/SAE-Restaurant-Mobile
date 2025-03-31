@@ -69,11 +69,9 @@ class _HomePageState extends State<HomePage> {
          //save
          TextButton(
            onPressed: (){
-
-
              final newNote = Note(
                  mail: mailControleur.text,
-                 note: noteControleur.text  as int,
+                 note: int.parse(noteControleur.text),
                  commentaire: commentaireControleur.text,
                  date: DateTime.now().toString(),
                  nomAuteur: nomAuteurControleur.text,
@@ -105,7 +103,7 @@ class _HomePageState extends State<HomePage> {
       ),
 
       body: StreamBuilder(
-        stream: notesDatabase.stream,
+        stream: notesDatabase.get_stream(),
         builder: (context,snapshot){
           if ( !snapshot.hasData){
             return const Center(child: CircularProgressIndicator());
@@ -120,7 +118,7 @@ class _HomePageState extends State<HomePage> {
                 return ListTile(
                   leading: CircleAvatar(
                   child: Text('C')),
-                  title: Text('Headline' + note.note),
+                  title: Text('Headline' + note.note.toString()),
                   subtitle: Text(
                       note.commentaire
                   ),
