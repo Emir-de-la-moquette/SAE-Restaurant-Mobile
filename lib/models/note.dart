@@ -39,12 +39,12 @@ class Note {
 
   factory Note.fromMap(Map<String, dynamic> map){
     return Note(
-      note: map['note'] as int,
-      mail: map['emailpersonne'] as String,
-      commentaire: map['commentaire'] as String,
+      note: int.parse(map['note']),
+      mail: map['emailpersonne'].toString(),
+      commentaire: map['commentaire'].toString(),
       date: map['date'] as String,
-      nomAuteur: map['nompersonne'] as String,
-      prenomAuteur: map['prenompersonne'] as String,
+      nomAuteur: map['nompersonne'].toString(),
+      prenomAuteur: map['prenompersonne'].toString(),
     );
   }
 
@@ -59,4 +59,6 @@ class Note {
       "prenomAuteur": prenomAuteur,
     };
   }
+
 }
+
