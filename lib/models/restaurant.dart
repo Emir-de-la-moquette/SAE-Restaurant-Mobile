@@ -54,5 +54,64 @@ class Restaurant{
   int getNbCommentaire(){
     return this.notes.length;
   }
+
+
+
+factory Restaurant.fromMap(Map<String, dynamic> map){
+return Restaurant(
+  osmId: map['osmid'] as int,
+  nomRestaurant : map['nomrestaurant'] as String,
+  description: map['description'] as String,
+  region: map['nomregion'] as String,
+  departement: map['nomdepartement'] as String,
+  ville: map['nomcommune'] as String,
+  latitude: map['latitude'] as double,
+  longitude: map['longitude'] as double,
+  siteWeb: map['siteweb'] as String,
+  facebook: map['facebook'] as String,
+  telRestaurant: map['telrestaurant'] as String,
+  nbEtoiles: map['nbetoilemichelin'] as double, //TODO voir si etoile michelin ou ensemble de note
+  capacite: map['capacite'] as int,
+  fumeur: map['fumeur'] as bool,
+  drive: map['drive'] as bool,
+  aEmporter: map['aemporter'] as bool,
+  livraison: map['livraison'] as bool,
+  vegetarien: map['vegetarien'] as bool,
+  horairesOuverture: map['horairesouverture'] as String,
+  cuisines: map['nomcuisine'] as List<String>,
+  notes: map['notes'] as List<Note>,
+);
+
 }
+
+
+Map<String, dynamic> toMap() {
+return {
+"osmid":osmId,
+"nomrestaurant" :nomRestaurant,
+"description":description,
+"region":region,
+"departement":departement,
+"ville":ville,
+"latitude":latitude,
+"longitude":longitude,
+"siteweb":siteWeb,
+"facebook":facebook,
+"telrestaurant":telRestaurant,
+"nbetoilemichelin":nbEtoiles,
+"capacite":capacite,
+"fumeur":fumeur,
+"drive":drive,
+"aemporter":aEmporter,
+"livraison":livraison,
+"vegetarien":vegetarien,
+"horairesouverture":horairesOuverture,
+"cuisines":cuisines,
+"notes":notes,
+
+};
+}
+
+}
+
 

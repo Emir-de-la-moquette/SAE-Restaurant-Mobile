@@ -1,14 +1,7 @@
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+import 'package:flutter/material.dart';
+import './note_from_database.dart';
+import './note.dart';
 
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: 'Todos',
-      home: HomePage(),
-    );
-  }
-}
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -18,30 +11,127 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final _future = Supabase.instance.client
-      .from('todos')
-      .select();
+ final notesDatabase =NoteDataBase();
+
+ final noteControleur = TextEditingController();
+ final mailControleur = TextEditingController();
+ final commentaireControleur = TextEditingController();
+ final nomAuteurControleur = TextEditingController();
+ final prenomAuteurControleur = TextEditingController();
+
+
+ void addNewNote(){
+ showDialog(
+     context: context,
+
+     builder: (context) => AlertDialog(
+       title: const Text("Nouvelle Note"),
+       content: Column(
+         mainAxisSize: MainAxisSize.min,
+         children: [
+           TextField(
+             controller: mailControleur,
+             decoration: const InputDecoration(labelText: "Email"),
+           ),
+           TextField(
+             controller: noteControleur,
+             decoration: const InputDecoration(labelText: "Note"),
+           ),
+           TextField(
+             controller: commentaireControleur,
+             decoration: const InputDecoration(labelText: "Commentaire"),
+           ),
+           TextField(
+             controller: nomAuteurControleur,
+             decoration: const InputDecoration(labelText: "Nom de l'auteur"),
+           ),
+           TextField(
+             controller: prenomAuteurControleur,
+             decoration: const InputDecoration(labelText: "Prénom de l'auteur"),
+           ),
+         ],
+       ),
+       actions: [
+
+         //cancel button
+         TextButton(
+           onPressed: (){
+             Navigator.pop(context);
+             mailControleur.clear();
+             noteControleur.clear();
+             commentaireControleur.clear();
+             nomAuteurControleur.clear();
+             prenomAuteurControleur.clear();
+           },
+         child: const Text("Cancel"),
+         ),
+
+         //save
+         TextButton(
+           onPressed: (){
+
+
+             final newNote = Note(
+                 mail: mailControleur.text,
+                 note: noteControleur.text  as int,
+                 commentaire: commentaireControleur.text,
+                 date: DateTime.now().toString(),
+                 nomAuteur: nomAuteurControleur.text,
+                 prenomAuteur: prenomAuteurControleur.text,
+             );
+
+             notesDatabase.createNote(newNote);
+
+             Navigator.pop(context);
+             noteControleur.clear();
+           },
+           child: const Text("Save"),
+         ),
+       ],
+
+    ),
+    );
+ }
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FutureBuilder(
-        future: _future,
-        builder: (context, snapshot) {
-          if (!snapshot.hasData) {
+      appBar:AppBar(title: const Text("LES NOTES "),
+      ),
+      floatingActionButton: FloatingActionButton(
+          onPressed: addNewNote,
+              child: const Icon(Icons.add),
+      ),
+
+      body: StreamBuilder(
+        stream: notesDatabase.stream,
+        builder: (context,snapshot){
+          if ( !snapshot.hasData){
             return const Center(child: CircularProgressIndicator());
           }
-          final todos = snapshot.data!;
+
+          final notes = snapshot.data!;
           return ListView.builder(
-            itemCount: todos.length,
-            itemBuilder: ((context, index) {
-              final todo = todos[index];
-              return ListTile(
-                title: Text(todo['name']),
-              );
-            }),
+              itemCount: notes.length,
+              itemBuilder: (context,index){
+                final note = notes[index];
+
+                return ListTile(
+                  leading: CircleAvatar(
+                  child: Text('C')),
+                  title: Text('Headline' + note.note),
+                  subtitle: Text(
+                      note.commentaire
+                  ),
+                  trailing: Icon(Icons.favorite_rounded),
+                  isThreeLine: true,
+                );
+
+              },
           );
-        },
+        }
+
       ),
     );
   }
