@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:td2/UI/addtask.dart';
+import 'package:td2/UI/card1.dart';
+import 'package:td2/UI/card2.dart';
+import 'package:td2/UI/card3.dart';
+import 'package:td2/UI/settings.dart';
+import 'package:td2/UI/addtaskv2.dart';
 
 class Home extends StatefulWidget {
-  final Widget child;
-  const Home({Key? key, required this.child}) : super(key: key);
 
   @override
   State<Home> createState() => _HomeState();
@@ -12,15 +15,14 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   int _selectedIndex = 0;
 
-  static const List<String> routes = [
-    '/',
-    '/favoris',
-    '/restaurant',
-    '/profil'
+  static List<Widget> pages = <Widget>[
+    Ecran1(),
+    Ecran2(),
+    Ecran3(),
+    EcranSettings()
   ];
 
   void _onItemTapped(int index) {
-    context.go(routes[index]);
     setState(() {
       _selectedIndex = index;
     });
@@ -29,21 +31,45 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("App td2")),
-      body: widget.child,
+      appBar: AppBar(
+        title: Text("App td2", style: Theme.of(context).textTheme.headlineLarge)
+      ),
+      body: Center(
+        //child: Text("Debut td2", style: Theme.of(context).textTheme.bodyMedium,),
+        child: pages[_selectedIndex],
+      ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
-        selectedItemColor: Colors.blue,
-        unselectedItemColor: Colors.grey,
-
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.restaurant), label: 'Restaurants'),
-          BottomNavigationBarItem(icon: Icon(Icons.image_outlined), label: 'Mes Images'),
-          BottomNavigationBarItem(icon: Icon(Icons.favorite), label: 'Favoris'),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profil'),
-        ],
+        selectedItemColor: Theme.of(context).textSelectionTheme.selectionColor,
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.article),
+            label: 'Card 1'
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.article),
+            label: 'Card 2'
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.article),
+            label: 'Card 3'
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings),
+            label: 'Settings'
+          )
+        ]
       ),
+      floatingActionButton: _selectedIndex==0?FloatingActionButton(
+        onPressed: () {
+            Navigator.push(context, MaterialPageRoute(
+              builder: (context) => AddTaskV2(),
+            )
+          );
+        },
+        child: const Icon(Icons.add),
+      )
+      :const SizedBox.shrink(),
     );
-  }
-}
+  }}
