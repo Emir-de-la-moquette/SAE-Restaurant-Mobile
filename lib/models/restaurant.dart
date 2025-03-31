@@ -23,6 +23,8 @@ class Restaurant{
   List<String> cuisines;
   List<Note> notes;
 
+  bool isFavorite = false; // Gère l'état du favori
+
   Restaurant({
     required this.osmId,
     required this.nomRestaurant,
@@ -47,11 +49,16 @@ class Restaurant{
     required this.notes,
   });
 
+
   String localiser(){
     return "${this.ville}, ${this.departement}, ${this.region}";
   }
 
   int getNbCommentaire(){
     return this.notes.length;
+  }
+
+  void setState() {
+    this.isFavorite=!this.isFavorite;
   }
 }
