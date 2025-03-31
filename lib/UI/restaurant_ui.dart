@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:td2/UI/image_picker.dart';
 
 import '../models/note.dart';
 import '../models/restaurant.dart';
@@ -148,6 +149,10 @@ class _RestaurantUIState extends State<RestaurantUI> {
                   style: TextStyle(color: Colors.black54)),
             ),
             const SizedBox(height: 10),
+            Container(
+              height: 200,
+              child: ImagePickerResto(),
+            ),
 
             /// 💬 Section commentaires
             Row(

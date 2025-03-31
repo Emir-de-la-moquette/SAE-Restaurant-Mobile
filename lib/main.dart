@@ -63,7 +63,7 @@ class MyApp extends StatelessWidget {
           GoRoute(
             name: 'home',
             path: '/',
-            builder: (context, state) => Ecran1(),
+            builder: (context, state) => RestaurantUI(),
           ),
           GoRoute(
             name: 'favoris',
