@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:my_little_food/UI/commentaire_ui.dart';
-import 'package:my_little_food/UI/rating.dart';
-import 'package:my_little_food/models/note.dart';
-import 'package:my_little_food/models/restaurant.dart';
+
+import '../models/note.dart';
+import '../models/restaurant.dart';
+import './rating.dart';
+import './commentaire_ui.dart';
 
 class RestaurantUI extends StatefulWidget {
   const RestaurantUI({super.key});
@@ -12,7 +13,6 @@ class RestaurantUI extends StatefulWidget {
 }
 
 class _RestaurantUIState extends State<RestaurantUI> {
-  bool isFavorite = false; // Gère l'état du favori
   final TextEditingController _commentController = TextEditingController();
   double _userRating = 0; // Valeur par défaut de la note
 
@@ -65,7 +65,8 @@ class _RestaurantUIState extends State<RestaurantUI> {
     if (commentaire.isNotEmpty && _userRating > 0) {
       setState(() {
         resto.notes.add(Note(
-          mail: "nouveau.client@example.com", // À remplacer par le vrai utilisateur
+          mail:
+              "nouveau.client@example.com", // À remplacer par le vrai utilisateur
           note: _userRating.toInt(),
           commentaire: commentaire,
           date: DateTime.now().toString().split(' ')[0], // Date du jour
@@ -86,23 +87,19 @@ class _RestaurantUIState extends State<RestaurantUI> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            /// ⭐️ Note et Favori
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                IconButton(
-                  icon: Icon(
-                    isFavorite ? Icons.favorite : Icons.favorite_border,
-                    color: isFavorite ? Colors.red : Colors.grey,
-                    size: 40.0,
-                  ),
-                  onPressed: () {
-                    setState(() {
-                      isFavorite = !isFavorite;
-                    });
-                  },
-                ),
-              ],
+            /// Favori
+
+            IconButton(
+              icon: Icon(
+                this.resto.isFavorite ? Icons.favorite : Icons.favorite_border,
+                color: this.resto.isFavorite ? Colors.red : Colors.grey,
+                size: 40.0,
+              ),
+              onPressed: () {
+                setState(() {
+                  this.resto.isFavorite = !this.resto.isFavorite;
+                });
+              },
             ),
 
             /// 🍽️ Nom du restaurant
@@ -123,7 +120,8 @@ class _RestaurantUIState extends State<RestaurantUI> {
                 const SizedBox(width: 10),
                 Text(
                   resto.nbEtoiles.toString(),
-                  style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                      fontSize: 20, fontWeight: FontWeight.bold),
                 ),
                 const Icon(Icons.star, color: Colors.yellowAccent),
               ],
@@ -146,7 +144,8 @@ class _RestaurantUIState extends State<RestaurantUI> {
               height: 200,
               color: Colors.grey[300],
               alignment: Alignment.center,
-              child: const Text("Ici les images du restaurant", style: TextStyle(color: Colors.black54)),
+              child: const Text("Ici les images du restaurant",
+                  style: TextStyle(color: Colors.black54)),
             ),
             const SizedBox(height: 10),
 
@@ -160,7 +159,8 @@ class _RestaurantUIState extends State<RestaurantUI> {
                 const SizedBox(width: 8),
                 Text(
                   "${resto.notes.length}",
-                  style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
+                  style: const TextStyle(
+                      fontSize: 20, fontWeight: FontWeight.w300),
                 ),
                 const SizedBox(width: 4),
                 const Icon(Icons.question_answer_rounded),
@@ -171,14 +171,15 @@ class _RestaurantUIState extends State<RestaurantUI> {
             Container(
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
-                color: Colors.grey[200],
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   /// ⭐ **Sélection de la note**
-                  const Text("Note :", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                  const Text("Note :",
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                   RatingScreen(
                     onRatingUpdate: (rating) {
                       setState(() {
@@ -193,7 +194,8 @@ class _RestaurantUIState extends State<RestaurantUI> {
                     controller: _commentController,
                     decoration: InputDecoration(
                       hintText: "Écrire un commentaire...",
-                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10)),
                     ),
                     maxLines: 3,
                   ),
@@ -210,7 +212,8 @@ class _RestaurantUIState extends State<RestaurantUI> {
 
             /// 📩 Liste des commentaires
             SizedBox(
-              height: 300, // Définit une hauteur pour bien voir les commentaires
+              height:
+                  300, // Définit une hauteur pour bien voir les commentaires
               child: CommentaireUI(notes: resto.notes),
             ),
           ],
