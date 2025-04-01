@@ -4,6 +4,7 @@ import '../models/note.dart';
 import '../models/restaurant.dart';
 import './rating.dart';
 import './commentaire_ui.dart';
+import './map.dart';
 
 class RestaurantUI extends StatefulWidget {
   const RestaurantUI({super.key});
@@ -148,6 +149,11 @@ class _RestaurantUIState extends State<RestaurantUI> {
                   style: TextStyle(color: Colors.black54)),
             ),
             const SizedBox(height: 10),
+
+            SizedBox(
+              height: 500, // Hauteur fixe pour éviter les erreurs de dimensionnement
+              child: Mapmoi(lon:resto.longitude,lat:resto.latitude,nom:resto.nomRestaurant),
+            ),
 
             /// 💬 Section commentaires
             Row(

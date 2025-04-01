@@ -4,7 +4,12 @@ import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
 
 class Mapmoi extends StatefulWidget {
-  const Mapmoi({super.key});
+  final String nom;
+  final double lat;
+  final double lon;
+
+
+  const Mapmoi({super.key, required this.lat, required this.lon, required this.nom});
 
   @override
   State<Mapmoi> createState() => _MapState();
@@ -40,13 +45,13 @@ class _MapState extends State<Mapmoi> {
               MarkerLayer(
                 markers: [
                   Marker(
-                    point: LatLng(48.8566, 2.3522), // Position du point
+                    point: LatLng(widget.lat, widget.lon), // Position du point
                     width: 80,
                     height: 80,
                     child: Column(
                       children: [
                         Icon(Icons.location_pin, color: Colors.red, size: 40),
-                        Text("Paris", style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold,color: Colors.red)),
+                        Text(widget.nom, style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold,color: Colors.black)),
                       ],
                     ),
                   ),
