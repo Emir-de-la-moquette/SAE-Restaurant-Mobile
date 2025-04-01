@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'connect.dart';
+import 'UI/connect.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
