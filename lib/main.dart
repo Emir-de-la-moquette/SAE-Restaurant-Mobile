@@ -7,8 +7,8 @@ import 'package:td2/UI/home.dart';
 import 'package:td2/UI/mytheme.dart';
 import 'package:td2/viewmodels/settingsviewmodels.dart';
 import 'package:td2/viewmodels/taskviewmodels.dart';
+import 'package:td2/viewmodels/favoritecuisinesviewmodel.dart'; // Ajout du ViewModel des cuisines favorites
 import 'dart:async';
-import 'package:flutter/widgets.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -20,9 +20,10 @@ import 'UI/settings.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  if(kIsWeb){
+  if (kIsWeb) {
     databaseFactory = databaseFactoryFfiWeb;
   }
+
   final database = openDatabase(
     join(await getDatabasesPath(), 'task_database.db'),
     version: 1,
@@ -30,10 +31,11 @@ Future<void> main() async {
       return db.execute(
         'CREATE TABLE TASK(id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, description TEXT, tags TEXT, nbhours INTEGER, difficulty INTEGER)',
       );
-    }
+    },
   );
+
   final db = await database;
-  runApp(MyApp(database: db,));
+  runApp(MyApp(database: db));
 }
 
 final GoRouter router = GoRouter(
@@ -84,41 +86,46 @@ final GoRouter router = GoRouter(
   ],
 );
 
-
-
 class MyApp extends StatelessWidget {
   late final Database database;
 
   MyApp({required this.database});
+
   @override
   Widget build(BuildContext context) {
-    return
-      MultiProvider(
+    return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-            create: (_){
-              SettingViewModel settingViewModel = SettingViewModel();
-              //getSettings est deja appelee dans le constructeur
-              return settingViewModel;
-            }),
+          create: (_) {
+            SettingViewModel settingViewModel = SettingViewModel();
+            return settingViewModel;
+          },
+        ),
         ChangeNotifierProvider(
-            create:(_){
-              TaskViewModel taskViewModel = TaskViewModel();
-              taskViewModel.generateTasks();
-              return taskViewModel;
-            } )
+          create: (_) {
+            TaskViewModel taskViewModel = TaskViewModel();
+            taskViewModel.generateTasks();
+            return taskViewModel;
+          },
+        ),
+        ChangeNotifierProvider(
+          create: (_) =>
+              FavoriteCuisinesViewModel(), // Ajout du ViewModel des cuisines favorites
+        ),
       ],
       child: Consumer<SettingViewModel>(
-        builder: (context,SettingViewModel notifier,child){
+        builder: (context, SettingViewModel notifier, child) {
           return MaterialApp.router(
             title: 'test',
             routerConfig: router,
-            theme: MyTheme.dark(),
+            theme: MyTheme.light(), // Application dynamique du thème clair
             darkTheme: MyTheme.dark(),
+            themeMode: notifier.isDark
+                ? ThemeMode.dark
+                : ThemeMode.light, // Gestion du mode sombre
           );
         },
       ),
     );
   }
 }
-
