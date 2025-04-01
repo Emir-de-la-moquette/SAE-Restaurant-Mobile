@@ -41,38 +41,51 @@ class _ImagePickerRestoState extends State<ImagePickerResto> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Sélection d'images")),
-      body: _imageBytesList.isEmpty
-          ? const Center(child: Text('Aucune image enregistrée'))
-          : GridView.builder(
-        padding: const EdgeInsets.all(10),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3, // Nombre de colonnes
-          crossAxisSpacing: 5,
-          mainAxisSpacing: 5,
-        ),
-        itemCount: _imageBytesList.length,
-        itemBuilder: (context, index) {
-          return Stack(
-            children: [
-              Positioned.fill(
-                child: Image.memory(_imageBytesList[index], fit: BoxFit.cover),
+      appBar: AppBar(title: const Text("Sélection d'images"),centerTitle: true,),
+      body: Column(
+        children: [
+          const SizedBox(height: 10),
+          _imageBytesList.isEmpty
+              ? const Center(child: Text('Aucune image enregistrée'))
+              : SizedBox(
+            height: 150, // Hauteur de la liste d'images
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: List.generate(_imageBytesList.length, (index) {
+                  return Stack(
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 5),
+                        width: 150,
+                        height: 150,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          image: DecorationImage(
+                            image: MemoryImage(_imageBytesList[index]),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        top: 5,
+                        right: 10,
+                        child: GestureDetector(
+                          onTap: () => _removeImage(index),
+                          child: const CircleAvatar(
+                            backgroundColor: Colors.red,
+                            radius: 12,
+                            child: Icon(Icons.close, size: 15, color: Colors.white),
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                }),
               ),
-              Positioned(
-                top: 5,
-                right: 5,
-                child: GestureDetector(
-                  onTap: () => _removeImage(index),
-                  child: const CircleAvatar(
-                    backgroundColor: Colors.red,
-                    radius: 12,
-                    child: Icon(Icons.close, size: 15, color: Colors.white),
-                  ),
-                ),
-              ),
-            ],
-          );
-        },
+            ),
+          ),
+        ],
       ),
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,

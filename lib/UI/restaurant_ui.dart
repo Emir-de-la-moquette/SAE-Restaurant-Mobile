@@ -139,20 +139,13 @@ class _RestaurantUIState extends State<RestaurantUI> {
               "Sur ${resto.notes.length} avis",
               style: const TextStyle(fontSize: 16, color: Colors.grey),
             ),
-
-            /// 🖼️ Placeholder pour les images (à remplacer par un vrai carousel)
-            Container(
-              height: 200,
-              color: Colors.grey[300],
-              alignment: Alignment.center,
-              child: const Text("Ici les images du restaurant",
-                  style: TextStyle(color: Colors.black54)),
-            ),
             const SizedBox(height: 10),
             Container(
               height: 200,
               child: ImagePickerResto(),
             ),
+            const SizedBox(height: 36),
+
 
             /// 💬 Section commentaires
             Row(
