@@ -9,11 +9,6 @@ class MyTheme {
       fontWeight: FontWeight.w700,
       color: Colors.black,
     ),
-    bodyLarge: GoogleFonts.openSans(
-      fontSize: 16.0,
-      fontWeight: FontWeight.w600,
-      color: Colors.black,
-    ),
     displayLarge: GoogleFonts.openSans(
       fontSize: 32.0,
       fontWeight: FontWeight.bold,
@@ -22,6 +17,11 @@ class MyTheme {
     displayMedium: GoogleFonts.openSans(
       fontSize: 21.0,
       fontWeight: FontWeight.w700,
+      color: Colors.black,
+    ),
+    bodyLarge: GoogleFonts.openSans(
+      fontSize: 16.0,
+      fontWeight: FontWeight.w600,
       color: Colors.black,
     ),
     displaySmall: GoogleFonts.openSans(
@@ -38,7 +38,7 @@ class MyTheme {
 
   // 2. Thème sombre
   static TextTheme darkTextTheme = TextTheme(
-    bodyLarge: GoogleFonts.openSans(
+    bodyMedium: GoogleFonts.openSans(
       fontSize: 14.0,
       fontWeight: FontWeight.w700,
       color: Colors.white,
@@ -50,6 +50,11 @@ class MyTheme {
     ),
     displayMedium: GoogleFonts.openSans(
       fontSize: 21.0,
+      fontWeight: FontWeight.w700,
+      color: Colors.white,
+    ),
+    bodyLarge: GoogleFonts.openSans(
+      fontSize: 16.0,
       fontWeight: FontWeight.w700,
       color: Colors.white,
     ),
