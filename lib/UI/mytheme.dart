@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class MyTheme {
-  // 1
+  // 1. Thème clair
   static TextTheme lightTextTheme = TextTheme(
-
     bodyMedium: GoogleFonts.openSans(
       fontSize: 14.0,
       fontWeight: FontWeight.w700,
-      color: Colors.black
+      color: Colors.black,
     ),
     bodyLarge: GoogleFonts.openSans(
       fontSize: 16.0,
@@ -37,7 +36,7 @@ class MyTheme {
     ),
   );
 
-  // 2
+  // 2. Thème sombre
   static TextTheme darkTextTheme = TextTheme(
     bodyLarge: GoogleFonts.openSans(
       fontSize: 14.0,
@@ -66,16 +65,12 @@ class MyTheme {
     ),
   );
 
-  // 3
+  // 3. Thème clair
   static ThemeData light() {
     return ThemeData(
       brightness: Brightness.light,
       checkboxTheme: CheckboxThemeData(
-        fillColor: WidgetStateColor.resolveWith(
-              (states) {
-            return Colors.black;
-          },
-        ),
+        fillColor: WidgetStateColor.resolveWith((states) => Colors.black),
       ),
       appBarTheme: const AppBarTheme(
         foregroundColor: Colors.black,
@@ -89,10 +84,20 @@ class MyTheme {
         selectedItemColor: Colors.green,
       ),
       textTheme: lightTextTheme,
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          foregroundColor: Colors.black,
+          backgroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+            side: const BorderSide(color: Colors.black),
+          ),
+        ),
+      ),
     );
   }
 
-  // 4
+  // 4. Thème sombre
   static ThemeData dark() {
     return ThemeData(
       brightness: Brightness.dark,
@@ -108,6 +113,22 @@ class MyTheme {
         selectedItemColor: Colors.green,
       ),
       textTheme: darkTextTheme,
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          foregroundColor: Colors.white,
+          backgroundColor: Colors.black,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+            side: const BorderSide(color: Colors.white),
+          ),
+        ),
+      ),
     );
+  }
+
+  static String getTasseImage(bool isDarkMode) {
+    return isDarkMode
+        ? 'assets/images/cafe_blanc.png'
+        : 'assets/images/cafe_noir.png';
   }
 }
