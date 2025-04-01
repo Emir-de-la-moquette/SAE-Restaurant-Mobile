@@ -1,10 +1,13 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:sqflite_common_ffi_web/sqflite_ffi_web.dart';
 import 'package:td2/UI/home.dart';
+import 'package:td2/UI/liste_favori.dart';
 import 'package:td2/UI/mytheme.dart';
+import 'package:td2/UI/restaurant_ui.dart';
 import 'package:td2/viewmodels/settingsviewmodels.dart';
 import 'package:td2/viewmodels/taskviewmodels.dart';
 import 'dart:async';
@@ -13,13 +16,17 @@ import 'package:sqflite/sqflite.dart';
 
 import 'UI/card1.dart';
 import 'UI/card2.dart';
-import 'UI/card3.dart';
+//import 'UI/card3.dart';
 import 'UI/connect.dart';
+import 'UI/map.dart';
+import 'UI/liste_resto.dart';
 import 'UI/settings.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  if (kIsWeb) {
+  // Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+
+  if(kIsWeb){
     databaseFactory = databaseFactoryFfiWeb;
   }
 
@@ -37,56 +44,55 @@ Future<void> main() async {
   runApp(MyApp(database: db));
 }
 
-final GoRouter router = GoRouter(
-  initialLocation: '/connexion',
-  routes: [
-    GoRoute(
-      name: 'connexion',
-      path: '/connexion',
-      builder: (context, state) => LoginScreen(),
-    ),
-    ShellRoute(
-      builder: (context, state, child) {
-        return Home(child: child);
-      },
-      routes: [
-        GoRoute(
-          name: 'home',
-          path: '/',
-          builder: (context, state) => Ecran1(),
-        ),
-        GoRoute(
-          name: 'favoris',
-          path: '/favoris',
-          builder: (context, state) => Ecran3(),
-        ),
-        GoRoute(
-          name: 'restaurants',
-          path: '/restaurant',
-          builder: (context, state) => Ecran3(),
-        ),
-        GoRoute(
-          name: 'restaurant',
-          path: '/restaurant/:id',
-          builder: (context, state) => Ecran3(),
-        ),
-        GoRoute(
-          name: 'images',
-          path: '/images',
-          builder: (context, state) => Ecran2(),
-        ),
-        GoRoute(
-          name: 'profil',
-          path: '/profil',
-          builder: (context, state) => EcranSettings(),
-        ),
-      ],
-    ),
-  ],
-);
-
 class MyApp extends StatelessWidget {
   late final Database database;
+  final GoRouter router = GoRouter(
+    initialLocation: '/connexion',
+    routes: [
+      GoRoute(
+        name: 'connexion',
+        path: '/connexion',
+        builder: (context, state) => LoginScreen(),
+      ),
+      ShellRoute(
+        builder: (context, state, child) {
+          return Home(child: child);
+        },
+        routes: [
+          GoRoute(
+            name: 'home',
+            path: '/',
+            builder: (context, state) => RestaurantUI(),
+          ),
+          GoRoute(
+            name: 'favoris',
+            path: '/favoris',
+            builder: (context, state) => ListeFavori(),
+          ),
+          GoRoute(
+            name: 'restaurants',
+            path: '/restaurant',
+            builder: (context, state) => ListeResto(),
+          ),
+          GoRoute(
+            name: 'restaurant',
+            path: '/restaurant/:id',
+            builder: (context, state) => RestaurantUI(),
+          ),
+          GoRoute(
+            name: 'images',
+            path: '/images',
+            builder: (context, state) => Ecran2(),
+          ),
+          GoRoute(
+            name: 'profil',
+            path: '/profil',
+            builder: (context, state) => EcranSettings(),
+          ),
+        ],
+      ),
+    ],
+  );
 
   MyApp({required this.database});
 

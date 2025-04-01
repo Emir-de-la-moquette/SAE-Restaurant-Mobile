@@ -14,8 +14,8 @@ class _HomeState extends State<Home> {
 
   static const List<String> routes = [
     '/',
-    '/favoris',
     '/restaurant',
+    '/favoris',
     '/profil'
   ];
 
