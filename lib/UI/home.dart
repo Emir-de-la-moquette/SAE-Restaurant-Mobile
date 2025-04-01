@@ -15,11 +15,11 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   int _selectedIndex = 0;
 
-  static List<Widget> pages = <Widget>[
-    Ecran1(),
-    Ecran2(),
-    Ecran3(),
-    EcranSettings()
+  static const List<String> routes = [
+    '/',
+    '/restaurant',
+    '/favoris',
+    '/profil'
   ];
 
   void _onItemTapped(int index) {
