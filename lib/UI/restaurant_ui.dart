@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:td2/UI/image_picker.dart';
 
 import '../models/note.dart';
 import '../models/restaurant.dart';
@@ -138,16 +139,13 @@ class _RestaurantUIState extends State<RestaurantUI> {
               "Sur ${resto.notes.length} avis",
               style: const TextStyle(fontSize: 16, color: Colors.grey),
             ),
-
-            /// 🖼️ Placeholder pour les images (à remplacer par un vrai carousel)
+            const SizedBox(height: 10),
             Container(
               height: 200,
-              color: Colors.grey[300],
-              alignment: Alignment.center,
-              child: const Text("Ici les images du restaurant",
-                  style: TextStyle(color: Colors.black54)),
+              child: ImagePickerResto(osmId :this.resto.osmId),
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 36),
+
 
             /// 💬 Section commentaires
             Row(
