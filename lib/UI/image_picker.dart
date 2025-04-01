@@ -1,9 +1,12 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ImagePickerResto extends StatefulWidget {
-  const ImagePickerResto({super.key});
+  final int osmId;
+
+  const ImagePickerResto({super.key, required this.osmId});
 
   @override
   State<ImagePickerResto> createState() => _ImagePickerRestoState();
@@ -11,6 +14,28 @@ class ImagePickerResto extends StatefulWidget {
 
 class _ImagePickerRestoState extends State<ImagePickerResto> {
   List<Uint8List> _imageBytesList = [];
+
+  @override
+  void initState(){
+    super.initState();
+    _initializeImages();
+  }
+
+  Future<void> _initializeImages() async {
+    List<String> imagePaths = ['assets/image1.png', 'assets/image2.png','assets/image3.png',];//A remplacer par la requete à la BD locale
+
+    List<Uint8List> imageList = [];
+
+    for (String path in imagePaths) {
+      final ByteData imageData = await rootBundle.load(path);
+      final Uint8List bytes = imageData.buffer.asUint8List();
+      imageList.add(bytes);
+    }
+
+    setState(() {
+      _imageBytesList = imageList;
+    });
+  }
 
   Future<void> _captureImageFromCamera() async {
     final XFile? pickedFile = await ImagePicker().pickImage(source: ImageSource.camera);
@@ -35,6 +60,7 @@ class _ImagePickerRestoState extends State<ImagePickerResto> {
   void _removeImage(int index) {
     setState(() {
       _imageBytesList.removeAt(index);
+      // puis pop de la BD
     });
   }
 

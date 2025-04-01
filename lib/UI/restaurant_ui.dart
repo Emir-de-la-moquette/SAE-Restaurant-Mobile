@@ -142,7 +142,7 @@ class _RestaurantUIState extends State<RestaurantUI> {
             const SizedBox(height: 10),
             Container(
               height: 200,
-              child: ImagePickerResto(),
+              child: ImagePickerResto(osmId :this.resto.osmId),
             ),
             const SizedBox(height: 36),
 
