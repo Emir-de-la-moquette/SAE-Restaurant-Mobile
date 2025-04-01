@@ -24,11 +24,10 @@ import 'UI/liste_resto.dart';
 import 'UI/settings.dart';
 
 Future<void> main() async {
-  Position position = await Geolocator.getCurrentPosition(
-      desiredAccuracy: LocationAccuracy.high);
-  print(position);
-
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+
   if(kIsWeb){
     databaseFactory = databaseFactoryFfiWeb;
   }
