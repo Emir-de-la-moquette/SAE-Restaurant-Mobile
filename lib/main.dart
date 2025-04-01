@@ -7,7 +7,6 @@ import 'package:td2/UI/home.dart';
 import 'package:td2/UI/mytheme.dart';
 import 'package:td2/viewmodels/settingsviewmodels.dart';
 import 'package:td2/viewmodels/taskviewmodels.dart';
-import 'package:td2/viewmodels/favoritecuisinesviewmodel.dart'; // Ajout du ViewModel des cuisines favorites
 import 'dart:async';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
@@ -107,10 +106,6 @@ class MyApp extends StatelessWidget {
             taskViewModel.generateTasks();
             return taskViewModel;
           },
-        ),
-        ChangeNotifierProvider(
-          create: (_) =>
-              FavoriteCuisinesViewModel(), // Ajout du ViewModel des cuisines favorites
         ),
       ],
       child: Consumer<SettingViewModel>(

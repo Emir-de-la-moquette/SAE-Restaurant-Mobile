@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:td2/models/modCuisine.dart';
 
 class FavoriteCuisinesWidget extends StatefulWidget {
   const FavoriteCuisinesWidget({Key? key}) : super(key: key);
@@ -8,28 +9,36 @@ class FavoriteCuisinesWidget extends StatefulWidget {
 }
 
 class _FavoriteCuisinesWidgetState extends State<FavoriteCuisinesWidget> {
-  final List<String> allCuisines = [
-    'Italienne',
-    'Chinoise',
-    'Française',
-    'Mexicaine',
-    'Japonaise',
-    'Indienne',
-    'Italienne',
-    'Chinoise',
-    'Française',
-    'Mexicaine',
-    'Japonaise',
-    'Indienne',
-    'Italienne',
-    'Chinoise',
-    'Française',
-    'Mexicaine',
-    'Japonaise',
-    'Indienne',
-  ];
+  List<String> allCuisines = [];
+  Set<String> selectedCuisines = {};
 
-  final Set<String> selectedCuisines = {};
+  @override
+  void initState() {
+    super.initState();
+    _loadCuisines();
+  }
+
+  Future<void> _loadCuisines() async {
+    List<String> cuisines = await getCuisines();
+    Set<String> favCuisines = await getLocalFavCuisines();
+    
+    setState(() {
+      allCuisines = cuisines;
+      selectedCuisines = favCuisines;
+    });
+  }
+
+  void _toggleCuisine(String cuisine) async {
+    setState(() {
+      if (selectedCuisines.contains(cuisine)) {
+        selectedCuisines.remove(cuisine);
+        supprLocalFavCuisine(cuisine);
+      } else {
+        selectedCuisines.add(cuisine);
+        addLocalFavCuisine(cuisine);
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,15 +58,7 @@ class _FavoriteCuisinesWidgetState extends State<FavoriteCuisinesWidget> {
             children: allCuisines.map((cuisine) {
               bool isSelected = selectedCuisines.contains(cuisine);
               return GestureDetector(
-                onTap: () {
-                  setState(() {
-                    if (isSelected) {
-                      selectedCuisines.remove(cuisine);
-                    } else {
-                      selectedCuisines.add(cuisine);
-                    }
-                  });
-                },
+                onTap: () => _toggleCuisine(cuisine),
                 child: Container(
                   width: 80,
                   height: 40,
