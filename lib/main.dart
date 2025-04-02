@@ -21,6 +21,7 @@ import 'UI/connect.dart';
 import 'UI/map.dart';
 import 'UI/liste_resto.dart';
 import 'UI/settings.dart';
+import 'models/AuthService.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -48,6 +49,18 @@ class MyApp extends StatelessWidget {
   late final Database database;
   final GoRouter router = GoRouter(
     initialLocation: '/connexion',
+    redirect: (context, state) async {
+      // Vérifie si l'utilisateur est connecté
+      final bool isAuthenticated = await AuthService.isUserLoggedIn(); // Remplace avec ta logique d'authentification
+
+      final bool isLoggingIn = state.fullPath == '/connexion';
+
+      // Si l'utilisateur n'est pas connecté et n'est pas sur la page de connexion, on le redirige
+      if (!isAuthenticated && !isLoggingIn) {
+        return '/connexion';
+      }
+      return null;
+    },
     routes: [
       GoRoute(
         name: 'connexion',
