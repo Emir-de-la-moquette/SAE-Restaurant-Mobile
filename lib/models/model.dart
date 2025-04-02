@@ -12,11 +12,25 @@ List<User> users = [
   User(email: "pouler@pouler.fr", password: "roti"),
 ];
 
-bool userExist(String email, String password) {
+bool userValid(String email, String password) {
   for (var user in users) {
     if (user.email == email && user.password == password) {
       return true;
     }
   }
   return false;
+}
+
+bool userExist(String email) {
+  for (var user in users) {
+    if (user.email == email) {
+      return true;
+    }
+  }
+  return false;
+}
+
+bool inscription(
+    String nom, String prenom, String tel, String mail, String mdp) {
+  return true;
 }

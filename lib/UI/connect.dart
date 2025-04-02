@@ -21,7 +21,7 @@ class _LoginScreenState extends State<LoginScreen> {
       String email = _emailController.text;
       String password = _passwordController.text;
 
-      if (userExist(email, password)) {
+      if (userValid(email, password)) {
         refreshPref(7);
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text("Connexion réussie 🎉")),
@@ -33,6 +33,10 @@ class _LoginScreenState extends State<LoginScreen> {
         );
       }
     }
+  }
+
+  void _signup() async {
+    context.go('/signup');
   }
 
   void _logout() async {
@@ -121,6 +125,16 @@ class _LoginScreenState extends State<LoginScreen> {
                 onPressed: _login,
                 child: Text("Se connecter"),
               ),
+              TextButton(
+                onPressed: _signup,
+                child: Text(
+                  "Pas de compte ? Créer un compte",
+                  style: TextStyle(
+                    decoration: TextDecoration.underline,
+                    color: Colors.blue,
+                  ),
+                ),
+              )
             ],
           ),
         ),

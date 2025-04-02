@@ -43,7 +43,7 @@ class _HomeState extends State<Home> {
               height: 24,
             ),
             const SizedBox(width: 8),
-            const Text('Paramètres'),
+            const Text('My little food'),
           ],
         ),
       ),

@@ -8,6 +8,7 @@ import 'package:td2/UI/home.dart';
 import 'package:td2/UI/liste_favori.dart';
 import 'package:td2/UI/mytheme.dart';
 import 'package:td2/UI/restaurant_ui.dart';
+import 'package:td2/UI/signup.dart';
 import 'package:td2/viewmodels/settingsviewmodels.dart';
 import 'package:td2/viewmodels/taskviewmodels.dart';
 import 'dart:async';
@@ -26,7 +27,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
 
-  if(kIsWeb){
+  if (kIsWeb) {
     databaseFactory = databaseFactoryFfiWeb;
   }
 
@@ -53,6 +54,11 @@ class MyApp extends StatelessWidget {
         name: 'connexion',
         path: '/connexion',
         builder: (context, state) => LoginScreen(),
+      ),
+      GoRoute(
+        name: 'creercompte',
+        path: '/signup',
+        builder: (context, state) => signupScreen(),
       ),
       ShellRoute(
         builder: (context, state, child) {
