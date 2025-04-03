@@ -3,20 +3,19 @@ import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 
 class Note {
+  int osmid;
   String mail;
   int note;
   String commentaire;
   String date;
-  String nomAuteur;
-  String prenomAuteur;
+
 
   Note({
+    required this.osmid,
     required this.mail,
     required this.note,
     required this.commentaire,
     required this.date,
-    required this.nomAuteur,
-    required this.prenomAuteur
   });
 
   String getDateDiff() {
@@ -39,24 +38,23 @@ class Note {
 
   factory Note.fromMap(Map<String, dynamic> map){
     return Note(
+      osmid: int.parse(map['osmid']),
       note: int.parse(map['note']),
       mail: map['emailpersonne'].toString(),
       commentaire: map['commentaire'].toString(),
-      date: map['date'] as String,
-      nomAuteur: map['nompersonne'].toString(),
-      prenomAuteur: map['prenompersonne'].toString(),
+      date: map['date'].toString(),
+
     );
   }
 
 
   Map<String, dynamic> toMap() {
     return {
-      "note": note,
       "mail": mail,
+      "osmid": osmid,
+      "note": note,
       "commentaire": commentaire,
       "date": date,
-      "nomAuteur": nomAuteur,
-      "prenomAuteur": prenomAuteur,
     };
   }
 

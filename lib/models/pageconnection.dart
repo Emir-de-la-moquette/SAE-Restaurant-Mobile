@@ -1,11 +1,15 @@
+
 import 'package:flutter/material.dart';
-import './note_from_database.dart';
-import './note.dart';
+import 'modelBD/note_from_database.dart';
+import 'class/note.dart';
+
+import 'modelBD/restaurant_from_database.dart';
+import 'class/restaurant.dart';
+
 
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
-
   @override
   State<HomePage> createState() => _HomePageState();
 }
@@ -16,16 +20,32 @@ class _HomePageState extends State<HomePage> {
  final noteControleur = TextEditingController();
  final mailControleur = TextEditingController();
  final commentaireControleur = TextEditingController();
- final nomAuteurControleur = TextEditingController();
- final prenomAuteurControleur = TextEditingController();
+
+ List<Map<String, dynamic>> dataMap = [];
+
+ @override
+ void initState() {
+   super.initState();
+   loadData();
+ }
+
+ Future<void> loadData() async {
+   try {
+
+    dataMap = await notesDatabase.selectNoteTotal();
+
+   } catch (e) {
+     print('Erreur lors de la récupération des données: $e');
+   }
+ }
 
 
  void addNewNote(){
  showDialog(
      context: context,
-
      builder: (context) => AlertDialog(
        title: const Text("Nouvelle Note"),
+
        content: Column(
          mainAxisSize: MainAxisSize.min,
          children: [
@@ -41,14 +61,6 @@ class _HomePageState extends State<HomePage> {
              controller: commentaireControleur,
              decoration: const InputDecoration(labelText: "Commentaire"),
            ),
-           TextField(
-             controller: nomAuteurControleur,
-             decoration: const InputDecoration(labelText: "Nom de l'auteur"),
-           ),
-           TextField(
-             controller: prenomAuteurControleur,
-             decoration: const InputDecoration(labelText: "Prénom de l'auteur"),
-           ),
          ],
        ),
        actions: [
@@ -60,8 +72,6 @@ class _HomePageState extends State<HomePage> {
              mailControleur.clear();
              noteControleur.clear();
              commentaireControleur.clear();
-             nomAuteurControleur.clear();
-             prenomAuteurControleur.clear();
            },
          child: const Text("Cancel"),
          ),
@@ -70,12 +80,11 @@ class _HomePageState extends State<HomePage> {
          TextButton(
            onPressed: (){
              final newNote = Note(
+                 osmid: 0,
                  mail: mailControleur.text,
                  note: int.parse(noteControleur.text),
                  commentaire: commentaireControleur.text,
                  date: DateTime.now().toString(),
-                 nomAuteur: nomAuteurControleur.text,
-                 prenomAuteur: prenomAuteurControleur.text,
              );
 
              notesDatabase.createNote(newNote);
@@ -101,36 +110,20 @@ class _HomePageState extends State<HomePage> {
           onPressed: addNewNote,
               child: const Icon(Icons.add),
       ),
+      body:dataMap.isEmpty
+          ? Center(child: CircularProgressIndicator())
+          : ListView.builder(
+            itemCount: dataMap.length,
+            itemBuilder: (context, index) {
+              Map<String, dynamic> item = dataMap[index];
+              List<String> keys = item.keys.toList();
 
-      body: StreamBuilder(
-        stream: notesDatabase.get_stream(),
-        builder: (context,snapshot){
-          if ( !snapshot.hasData){
-            return const Center(child: CircularProgressIndicator());
-          }
-
-          final notes = snapshot.data!;
-          return ListView.builder(
-              itemCount: notes.length,
-              itemBuilder: (context,index){
-                final note = notes[index];
-
-                return ListTile(
-                  leading: CircleAvatar(
-                  child: Text('C')),
-                  title: Text('Headline' + note.note.toString()),
-                  subtitle: Text(
-                      note.commentaire
-                  ),
-                  trailing: Icon(Icons.favorite_rounded),
-                  isThreeLine: true,
-                );
-
-              },
+              return ListTile(
+                title: Text(keys.join(", ")),
+                subtitle: Text(item.toString()),
           );
-        }
-
-      ),
+        },
+      )
     );
   }
 }
