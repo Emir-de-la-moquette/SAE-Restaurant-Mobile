@@ -12,7 +12,7 @@ class RestaurantDataBase{
   Future ConvertSelectToMap(data)async {
     List<Map<String, dynamic>> dataMapList = List<Map<String, dynamic>>.from(data);
     return dataMapList;
-    // Afficher la nouvelle liste
+
 
   }
 
@@ -59,33 +59,3 @@ class RestaurantDataBase{
 }
 
 
-class FavoriesDataBase{
-  final database = Supabase.instance.client.from("favori");
-
-  //creation
-  Future createFavories(Favories newFavories) async{
-    await database.insert(newFavories.toMap());
-  }
-
-  //read
-  final stream =Supabase.instance.client.from("favori").stream(primaryKey: ['osmid','emailpersonne'],
-  ).map((data) => data.map((noteMap) => Favories.fromMap(noteMap))).toList();
-
-  //Update
-  Future UpdateFavories(Favories oldFavories,Favories newFavories) async{
-    await database.update({
-      "osmid":newFavories.osmId,
-      "nomrestaurant" :newFavories.mail,
-
-    }).eq('osmid',oldFavories.osmId!);
-  }
-
-  //delect
-  Future DelectFavories(Favories favories) async{
-    await database.delete().eq('osmid',favories.osmId!);
-  }
-
-  //voir pour double clef primaire
-
-
-}
