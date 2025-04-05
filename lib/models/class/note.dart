@@ -1,22 +1,20 @@
 import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
-import 'package:flutter/material.dart';
 
 class Note {
-  int osmid;
   String mail;
   int note;
   String commentaire;
   String date;
 
 
-  Note({
-    required this.osmid,
-    required this.mail,
-    required this.note,
-    required this.commentaire,
-    required this.date,
-  });
+  Note(
+      {required this.mail,
+      required this.note,
+      required this.commentaire,
+      required this.date,
+      required this.nomAuteur,
+      required this.prenomAuteur});
 
   String getDateDiff() {
     DateTime date = DateFormat("yyyy-MM-dd").parse(this.date);
@@ -35,6 +33,14 @@ class Note {
       return "$days jours";
     }
   }
+
+  String getInitiale() {
+    String a = this.prenomAuteur[0];
+    String b = this.nomAuteur[0];
+    return "${a} ${b}";
+  }
+}
+
 
   factory Note.fromMap(Map<String, dynamic> map){
     return Note(
