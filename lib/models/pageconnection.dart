@@ -5,7 +5,7 @@ import 'modelBD/note_from_database.dart';
 import 'class/note.dart';
 
 import 'modelBD/restaurant_from_database.dart';
-import 'class/restaurant.dart';
+
 
 
 
@@ -40,7 +40,7 @@ class _HomePageState extends State<HomePage> {
 
      dataMapNote = await notesDatabase.selectNoteTotal();
      dataMapResto = await restaurantDatabase.selectRestaurantTotal();
-     dataMapFav = await favoriesDataBase.selectFavTotal();
+     dataMapFav = await favoriesDataBase.selectFavTotalS();
 
    } catch (e) {
      print('Erreur lors de la récupération des données: $e');

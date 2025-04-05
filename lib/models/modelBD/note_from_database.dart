@@ -11,30 +11,6 @@ class NoteDataBase{
   }
 
 
-  Future ConvertSelectToMap(data)async {
-    List<Map<String, dynamic>> dataMapList = List<Map<String, dynamic>>.from(data);
-    return dataMapList;
-    // Afficher la nouvelle liste
-
-  }
-
-
-  Future selectNoteTotal() async{
-   final response = await database.select();
-   List<dynamic> data = response;
-   List<Map<String, dynamic>> dataMap = await ConvertSelectToMap(data);
-   return dataMap;
-  }
-
-
-  Future selectNoteFromResto(resto) async{
-    final response = await database.select().eq("osmid", resto);
-    List<dynamic> data = response;
-    List<Map<String, dynamic>> dataMap = await ConvertSelectToMap(data);
-    return dataMap;
-  }
-
-
 
   //Update
   Future UpdateNote(Note oldNote,Note newNote) async{
@@ -57,5 +33,50 @@ class NoteDataBase{
 
   //a modifier pour que cela cible les bonnes notes
 
+
+
+
+  Future getCommentaire(mail) async{
+    final response = await database.select().eq("emailpersonne", mail);
+    List<dynamic> data = response;
+    List<Map<String, dynamic>> dataMap = await ConvertSelectToMap(data);
+    return dataMap;
+  }
+
+
+  Future selectNoteTotal() async{
+    final response = await database.select();
+    List<dynamic> data = response;
+    List<Map<String, dynamic>> dataMap = await ConvertSelectToMap(data);
+    return dataMap;
+  }
+
+
+  Future selectNoteFromResto(idresto) async{
+    final response = await database.select().eq("osmid", idresto);
+    List<dynamic> data = response;
+    List<Map<String, dynamic>> dataMap = await ConvertSelectToMap(data);
+    return dataMap;
+  }
+
+  Future ConvertSelectToMap(data)async {
+    List<Map<String, dynamic>> dataMapList = List<Map<String, dynamic>>.from(data);
+    return dataMapList;
+    // Afficher la nouvelle liste
+
+  }
+
+
+
+  Future ConvertSelectToRestaurant(data)async {
+    List<Map<String, dynamic>> dataMapList = await ConvertSelectToMap(data);
+    List<Note> listeNote = [];
+    for (var note in dataMapList) {
+      Note rest = Note.fromMap(note);
+      listeNote.add(rest);
+    }
+    return listeNote;
+
+  }
 
 }

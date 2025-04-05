@@ -78,8 +78,8 @@ return Restaurant(
   livraison: map['livraison'] as bool,
   vegetarien: map['vegetarien'] as bool,
   horairesOuverture: map['horairesouverture'] as String,
-  cuisines: map['nomcuisine'] as List<String>,
-  notes: map['notes'] as List<Note>,
+  cuisines: map['nomcuisine'] as List<String>,// todo voir si modif
+  notes: map['notes'] as List<Note>,// todo voir si modif
 );
 
 }
