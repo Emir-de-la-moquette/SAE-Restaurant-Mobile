@@ -7,7 +7,7 @@ final database = Supabase.instance.client;
 
 
 
-/*
+
 
 function getPrefCuisine($email){
 global $connexion;
