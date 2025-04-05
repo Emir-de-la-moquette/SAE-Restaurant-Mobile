@@ -34,7 +34,7 @@ class _MapState extends State<Mapmoi> {
           final position = snapshot.data!;
           return FlutterMap(
             options: MapOptions(
-              initialCenter: LatLng(position.latitude, position.longitude),
+              initialCenter: LatLng(widget.lat, widget.lon),
               initialZoom: 18,
             ),
             children: [
@@ -55,7 +55,14 @@ class _MapState extends State<Mapmoi> {
                       ],
                     ),
                   ),
+                  Marker(
+                    point: LatLng(position.latitude, position.longitude),
+                    width: 40,
+                    height: 40,
+                    child: Icon(Icons.person_pin_circle, color: Colors.blue, size: 30),
+                  ),
                 ],
+
               ),
               RichAttributionWidget(
                 attributions: [
