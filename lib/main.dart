@@ -5,10 +5,10 @@ import 'package:go_router/go_router.dart';
 
 import 'package:provider/provider.dart';
 import 'package:sqflite_common_ffi_web/sqflite_ffi_web.dart';
-import 'package:td2/UI/home.dart';
+import 'package:td2/UI/homes.dart';
 import 'package:td2/UI/liste_favori.dart';
 import 'package:td2/UI/mytheme.dart';
-import 'package:td2/UI/restaurant_ui.dart';
+import 'package:td2/UI/homes.dart';
 import 'package:td2/viewmodels/settingsviewmodels.dart';
 import 'dart:async';
 import 'package:path/path.dart';
@@ -80,7 +80,7 @@ class MyApp extends StatelessWidget {
           GoRoute(
             name: 'home',
             path: '/',
-            builder: (context, state) =>  RestaurantUI(),
+            builder: (context, state) =>  Homes(),
           ),
           GoRoute(
             name: 'favoris',
