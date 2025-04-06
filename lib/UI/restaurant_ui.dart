@@ -22,8 +22,46 @@ class _RestaurantUIState extends State<RestaurantUI> {
   double _userRating = 0; // Valeur par défaut de la note
 
   // Simule les données d'un restaurant (à remplacer avec les vraies données de la BD)
-  late Restaurant resto = Restaurant();
-
+  late Restaurant resto = Restaurant(
+    osmId: 1,
+    nomRestaurant: "Le Délice Gourmand",
+    description: "Un restaurant chaleureux avec des plats raffinés.",
+    region: "Île-de-France",
+    departement: "Paris",
+    ville: "Paris",
+    latitude: 48.8566,
+    longitude: 2.3522,
+    siteWeb: "www.ledelicegourmand.com",
+    facebook: "facebook.com/ledelicegourmand",
+    telRestaurant: "+33 1 23 45 67 89",
+    nbEtoiles: 4,
+    capacite: 50,
+    fumeur: false,
+    drive: true,
+    aEmporter: true,
+    livraison: true,
+    vegetarien: true,
+    horairesOuverture: "10h - 23h",
+    cuisines: ["Française", "Italienne"],
+    notes: [
+      Note(
+        mail: "client1@example.com",
+        note: 5,
+        commentaire: "Excellent restaurant, service impeccable !",
+        date: "2025-03-22",
+        nomAuteur: "Dupont",
+        prenomAuteur: "Jean",
+      ),
+      Note(
+        mail: "client2@example.com",
+        note: 3,
+        commentaire: "Bonne cuisine mais service un peu lent.",
+        date: "2025-03-18",
+        nomAuteur: "Martin",
+        prenomAuteur: "Sophie",
+      ),
+    ],
+  );
   /// 🔹 Fonction pour ajouter un commentaire
   void _ajouterCommentaire() {
     String commentaire = _commentController.text.trim();

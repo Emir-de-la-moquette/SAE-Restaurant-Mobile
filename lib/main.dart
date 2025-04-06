@@ -9,6 +9,7 @@ import 'package:td2/UI/homes.dart';
 import 'package:td2/UI/liste_favori.dart';
 import 'package:td2/UI/mytheme.dart';
 import 'package:td2/UI/homes.dart';
+import 'package:td2/UI/restaurant_ui.dart';
 import 'package:td2/viewmodels/settingsviewmodels.dart';
 import 'dart:async';
 import 'package:path/path.dart';
@@ -95,10 +96,7 @@ class MyApp extends StatelessWidget {
           GoRoute(
               name: 'restaurant',
               path: '/restaurant/:id',  // Définition de la route avec 'id' comme paramètre dynamique
-              builder: (BuildContext context, GoRouterState state) {
-                final String osmId = state.params['id'] ?? '';  // Utiliser 'id' comme clé pour accéder au paramètre
-                return RestaurantUI(osmId: osmId);  // Passer osmId à la page RestaurantUI
-              }
+              builder: (context, state) =>  RestaurantUI(),
           ),
           GoRoute(
             name: 'profil',
