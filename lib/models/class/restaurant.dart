@@ -74,7 +74,7 @@ return Restaurant(
   siteWeb: map['siteweb'].toString(),
   facebook: map['facebook'].toString(),
   telRestaurant: map['telrestaurant'].toString(),
-  nbEtoiles: map['nbetoilemichelin'] as double, //TODO voir si etoile michelin ou ensemble de note
+  nbEtoiles: map['nbetoilemichelin'] as double,
   capacite: map['capacite'] as int,
   fumeur: map['fumeur'] as bool,
   drive: map['drive'] as bool,
@@ -82,8 +82,8 @@ return Restaurant(
   livraison: map['livraison'] as bool,
   vegetarien: map['vegetarien'] as bool,
   horairesOuverture: map['horairesouverture'] as String,
-  cuisines: map['nomcuisine'] as List<String>,// todo voir si modif
-  notes: map['notes'] as List<Note>,// todo voir si modif
+  cuisines: map['nomcuisine'] as List<String>,
+  notes: map['notes'] as List<Note>,
 );
 
 }
@@ -110,9 +110,6 @@ return {
 "livraison":livraison,
 "vegetarien":vegetarien,
 "horairesouverture":horairesOuverture,
-"cuisines":cuisines,
-"notes":notes,
-
 };
 }
 
@@ -129,14 +126,41 @@ isFavorite() async{
     return false;
   }
 
-  void toggleFavorite() async{
-    estFavory = !estFavory;
-    if (!estFavory && this.isFavorite()){
-      await Supabase.instance.client.from("favori").delete().eq('osmid',this.osmId!);
-    }
-
-
+void toggleFavorite() async{
+  estFavory = !estFavory;
+  if (!estFavory && this.isFavorite()){
+    await Supabase.instance.client.from("favori").delete().eq('osmid',this.osmId!);
   }
+
+}
+
+Future getCuisine() async{
+    List<String> cuisine =[];
+    final response =  await Supabase.instance.client.from("preparer").select("nomcuisine").eq('osmid',this.osmId);
+    if (response != {} && response.isNotEmpty) {
+      for (var ligne in response) {
+        String nomCuisine = ligne['nomcuisine'];
+        cuisine.add(nomCuisine);
+        print('Nom de la cuisine: $nomCuisine');
+      }
+    }
+    return cuisine;
+  }
+
+Future getNote() async{
+  List<Note> notes =[];
+  final response =  await Supabase.instance.client.from("noter").select().eq('osmid',this.osmId);
+  if (response != {} && response.isNotEmpty) {
+
+    //TODO a modif saund je rentre
+    for (var ligne in response) {
+      String nomCuisine = ligne['nomcuisine'];
+      notes.add(nomCuisine);
+      print('Nom de la cuisine: $nomCuisine');
+    }
+  }
+  return notes;
+}
 
 }
 
