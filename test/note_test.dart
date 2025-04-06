@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/intl.dart';
-import 'package:td2/models/class/note.dart';
+import 'package:td2/models/note.dart';
 
 void main() {
   late Note note;

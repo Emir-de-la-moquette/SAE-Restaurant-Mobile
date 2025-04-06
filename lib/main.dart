@@ -90,6 +90,11 @@ class MyApp extends StatelessWidget {
             builder: (context, state) => RestaurantUI(),
           ),
           GoRoute(
+            name: 'images',
+            path: '/images',
+            builder: (context, state) => Ecran2(),
+          ),
+          GoRoute(
             name: 'profil',
             path: '/profil',
             builder: (context, state) => EcranSettings(),
