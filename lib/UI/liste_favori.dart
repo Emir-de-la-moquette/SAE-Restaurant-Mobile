@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import '../models/note.dart';
 import '../models/restaurant.dart';
 
@@ -237,6 +238,7 @@ class _ListeFavoriState extends State<ListeFavori> {
                   ),
                   onTap: (){
                     //redirection vers RestaurantUI de ce resto
+                    context.go('/restaurant/${restaurant.osmId}');
                   },
                 ),
               );
