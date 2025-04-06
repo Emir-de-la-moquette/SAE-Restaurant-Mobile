@@ -1,4 +1,3 @@
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
@@ -51,12 +50,12 @@ class MyApp extends StatelessWidget {
   final GoRouter router = GoRouter(
     initialLocation: '/connexion',
     redirect: (context, state) async {
-      // Vérifie si l'utilisateur est connecté
-      final bool isAuthenticated = await AuthService.isUserLoggedIn(); // Remplace avec ta logique d'authentification
+      // verif la connexion
+      final bool isAuthenticated = await AuthService.isUserLoggedIn();
 
       final bool isLoggingIn = state.fullPath == '/connexion';
 
-      // Si l'utilisateur n'est pas connecté et n'est pas sur la page de connexion, on le redirige
+      // redirection si pas connecté
       if (!isAuthenticated && !isLoggingIn) {
         return '/connexion';
       }
@@ -67,6 +66,11 @@ class MyApp extends StatelessWidget {
         name: 'connexion',
         path: '/connexion',
         builder: (context, state) => LoginScreen(),
+      ),
+      GoRoute(
+        name: 'creercompte',
+        path: '/signup',
+        builder: (context, state) => signupScreen(),
       ),
       ShellRoute(
         builder: (context, state, child) {
@@ -133,15 +137,14 @@ class MyApp extends StatelessWidget {
           return MaterialApp.router(
             title: 'test',
             routerConfig: router,
-            theme: MyTheme.light(), // Application dynamique du thème clair
+            theme: MyTheme.light(),
             darkTheme: MyTheme.dark(),
             themeMode: notifier.isDark
                 ? ThemeMode.dark
-                : ThemeMode.light, // Gestion du mode sombre
+                : ThemeMode.light,
           );
         },
       ),
     );
   }
 }
-
