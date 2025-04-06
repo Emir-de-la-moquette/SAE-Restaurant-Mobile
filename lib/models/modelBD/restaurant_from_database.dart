@@ -67,7 +67,6 @@ class RestaurantDataBase{
       listeResto.add(rest);
     }
     return listeResto;
-
   }
 
 

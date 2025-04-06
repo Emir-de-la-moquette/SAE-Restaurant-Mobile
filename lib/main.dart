@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
+
 import 'package:provider/provider.dart';
 import 'package:sqflite_common_ffi_web/sqflite_ffi_web.dart';
 import 'package:td2/UI/home.dart';
@@ -92,9 +93,12 @@ class MyApp extends StatelessWidget {
             builder: (context, state) => ListeResto(),
           ),
           GoRoute(
-            name: 'restaurant',
-            path: '/restaurant/:id',
-            builder: (context, state) => RestaurantUI(),
+              name: 'restaurant',
+              path: '/restaurant/:id',  // Définition de la route avec 'id' comme paramètre dynamique
+              builder: (BuildContext context, GoRouterState state) {
+                final String osmId = state.params['id'] ?? '';  // Utiliser 'id' comme clé pour accéder au paramètre
+                return RestaurantUI(osmId: osmId);  // Passer osmId à la page RestaurantUI
+              }
           ),
           GoRoute(
             name: 'profil',

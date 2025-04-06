@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../models/class/note.dart';
 import '../models/class/restaurant.dart';
 import '../models/modelBD/restaurant_from_database.dart';
+import 'package:go_router/go_router.dart';
 
 class ListeResto extends StatefulWidget {
   @override
@@ -13,7 +14,6 @@ class ListeResto extends StatefulWidget {
 class _ListeRestoState extends State<ListeResto> {
   final RestaurantDataBase restodata = RestaurantDataBase();
   late Future<List<Restaurant>> futureRestaurants;
-
 
   @override
   void initState() {
@@ -101,13 +101,15 @@ class _ListeRestoState extends State<ListeResto> {
                             size: 30.0,
                           ),
                           onPressed: () {
+
                             setState(() {
                               restaurant.toggleFavorite(); // Toggle the favorite status
                             });
                           },
                         ),
-                        onTap: () {
-                          // Redirection vers RestaurantUI de ce restaurant
+                        onTap: (){
+                          //redirection vers RestaurantUI de ce resto
+                          context.go('/restaurant/${restaurant.osmId}');
                         },
                       ),
                     );

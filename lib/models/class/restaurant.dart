@@ -152,6 +152,7 @@ Future getCuisine() async{
       }
       this.cuisines = cuisinecourant;
 
+
     }
   }
 
@@ -161,7 +162,6 @@ Future getNote() async{
 
 
     if (response != {} && response.isNotEmpty) {
-      print(response);
       for (var ligne in response) {
         String emailpersonne = ligne['emailpersonne'];
         int lanote =0;
