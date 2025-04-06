@@ -15,7 +15,6 @@ class NoteDataBase{
   //Update
   Future UpdateNote(Note oldNote,Note newNote) async{
     await database.update({
-      "osmid":newNote.osmid ,
       "note":newNote.note,
       "mail": newNote.mail,
       "commentaire":newNote.commentaire ,

@@ -1,5 +1,6 @@
 import 'note.dart';
-
+import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:flutter/material.dart';
 class Restaurant{
   int osmId;
   String nomRestaurant;
@@ -22,6 +23,9 @@ class Restaurant{
   String horairesOuverture;
   List<String> cuisines;
   List<Note> notes;
+
+ bool estFavory = false;
+
 
   Restaurant({
     required this.osmId,
@@ -111,6 +115,24 @@ return {
 
 };
 }
+
+
+
+  Future isFavorite() async{
+    final databrestofavory = Supabase.instance.client.from("favori");
+    final response = await databrestofavory.select().eq('osmid',this.osmId);
+
+    if (response != []){
+      estFavory = true;
+      return true;
+    }
+    estFavory = false ;
+    return false;
+  }
+
+  void toggleFavorite() {
+    estFavory = !estFavory;
+  }
 
 }
 

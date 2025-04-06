@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../models/note.dart';
-import '../models/restaurant.dart';
+import '../models/class/note.dart';
+import '../models/class/restaurant.dart';
 
 class ListeFavori extends StatefulWidget {
   @override

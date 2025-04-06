@@ -7,7 +7,6 @@ import 'dart:async';
 import 'package:flutter/widgets.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
-import './models/pageconnection.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 Future<void> main() async {

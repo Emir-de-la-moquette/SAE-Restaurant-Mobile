@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:td2/UI/image_picker.dart';
 
-import '../models/note.dart';
-import '../models/restaurant.dart';
+import '../models/class/note.dart';
+import '../models/class/restaurant.dart';
 import './rating.dart';
 import './commentaire_ui.dart';
 import './map.dart';
