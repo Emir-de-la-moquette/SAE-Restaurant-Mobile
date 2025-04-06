@@ -13,21 +13,19 @@ class NoteDataBase{
 
 
   //Update
-  Future UpdateNote(Note oldNote,Note newNote) async{
+  Future UpdateNote(Note oldNote,Note newNote,osmid) async{
     await database.update({
       "note":newNote.note,
       "mail": newNote.mail,
       "commentaire":newNote.commentaire ,
       "date": newNote.date,
 
-
-
-    }).eq('emailpersonne',oldNote.mail).eq('osmid', oldNote.osmid);
+    }).eq('emailpersonne',oldNote.mail).eq('osmid',osmid);
   }
 
   //delect
-  Future DelectNote(Note note) async{
-    await database.delete().eq('emailpersonne',note.mail!).eq('osmid',note.osmid);
+  Future DelectNote(Note note,osmid) async{
+    await database.delete().eq('emailpersonne',note.mail!).eq('osmid',osmid);
   }
 
   //a modifier pour que cela cible les bonnes notes

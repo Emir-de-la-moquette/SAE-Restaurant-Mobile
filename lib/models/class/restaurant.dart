@@ -1,6 +1,11 @@
 import 'note.dart';
+import '../modelBD/note_from_database.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+
+
+
 class Restaurant{
   int osmId;
   String nomRestaurant;
@@ -149,18 +154,85 @@ Future getCuisine() async{
 
 Future getNote() async{
   List<Note> notes =[];
-  final response =  await Supabase.instance.client.from("noter").select().eq('osmid',this.osmId);
-  if (response != {} && response.isNotEmpty) {
+  try {
+    final response =  await Supabase.instance.client.from("noter").select().eq('osmid',this.osmId);
+    if (response != {} && response.isNotEmpty) {
 
-    //TODO a modif saund je rentre
-    for (var ligne in response) {
-      String nomCuisine = ligne['nomcuisine'];
-      notes.add(nomCuisine);
-      print('Nom de la cuisine: $nomCuisine');
+      for (var ligne in response) {
+        String emailpersonne = ligne['emailpersonne'];
+        int lanote =0;
+        try {
+          lanote = int.parse(ligne['note']);
+        } catch (e) {
+          print("Erreur lors de la conversion de la note : $lanote");
+        }
+
+        String commentaire = ligne['commentaire'];
+        String date = ligne['date'];
+
+        final response2 =  await Supabase.instance.client.from("noter").select("nompersonne,prenompersonne").eq('emailpersonne',emailpersonne);
+        String nompersonne = response2[0]['nompersonne'];
+        String prenompersonne = response2[0]['prenompersonne'];
+
+        Note note = Note(
+          mail: emailpersonne,
+          note: lanote,
+          commentaire: commentaire,
+          date: date,
+          nomAuteur: nompersonne,
+          prenomAuteur: prenompersonne,
+        );
+        notes.add(note);
+      }
     }
+
+  } catch (e) {
+    print("Erreur lors de la récupération des notes : $e");
   }
   return notes;
 }
+
+  Future creerNoteResto(lanote,commentaire,emailpersonne) async{
+
+    final response =  await Supabase.instance.client.from("noter").select("nompersonne,prenompersonne").eq('emailpersonne',emailpersonne);
+    String nompersonne = response[0]['nompersonne'];
+    String prenompersonne = response[0]['prenompersonne'];
+
+    DateTime date = DateTime.now();
+    String newdate = DateFormat('yyyy-MM-dd').format(date);
+
+
+    if (response != {} && response.isNotEmpty) {
+      Note note = Note(
+        mail: emailpersonne,
+        note: lanote,
+        commentaire: commentaire,
+        date: newdate,
+        nomAuteur: nompersonne,
+        prenomAuteur: prenompersonne,
+      );
+
+    NoteDataBase traitement = NoteDataBase();
+    traitement.createNote(note);
+    }
+
+
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }
 
