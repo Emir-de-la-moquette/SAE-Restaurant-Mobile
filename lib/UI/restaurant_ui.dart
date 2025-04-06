@@ -93,13 +93,13 @@ class _RestaurantUIState extends State<RestaurantUI> {
 
             IconButton(
               icon: Icon(
-                this.resto.isFavorite ? Icons.favorite : Icons.favorite_border,
-                color: this.resto.isFavorite ? Colors.red : Colors.grey,
+                this.resto.isFavorite() ? Icons.favorite : Icons.favorite_border,
+                color: this.resto.isFavorite() ? Colors.red : Colors.grey,
                 size: 40.0,
               ),
               onPressed: () {
                 setState(() {
-                  this.resto.isFavorite = !this.resto.isFavorite;
+                  this.resto.toggleFavorite() ;
                 });
               },
             ),

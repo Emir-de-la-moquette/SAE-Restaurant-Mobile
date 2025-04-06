@@ -118,9 +118,8 @@ return {
 
 
 
-  Future isFavorite() async{
-    final databrestofavory = Supabase.instance.client.from("favori");
-    final response = await databrestofavory.select().eq('osmid',this.osmId);
+isFavorite() async{
+    final response = await Supabase.instance.client.from("favori").select().eq('osmid',this.osmId);
 
     if (response != []){
       estFavory = true;
@@ -130,8 +129,13 @@ return {
     return false;
   }
 
-  void toggleFavorite() {
+  void toggleFavorite() async{
     estFavory = !estFavory;
+    if (!estFavory && this.isFavorite()){
+      await Supabase.instance.client.from("favori").delete().eq('osmid',this.osmId!);
+    }
+
+
   }
 
 }

@@ -226,13 +226,13 @@ class _ListeFavoriState extends State<ListeFavori> {
                   ),
                   trailing: IconButton(
                     icon: Icon(
-                      restaurant.isFavorite ? Icons.favorite : Icons.favorite_border,
-                      color: restaurant.isFavorite ? Colors.red : Colors.grey,
+                      restaurant.isFavorite() ? Icons.favorite : Icons.favorite_border,
+                      color: restaurant.isFavorite() ? Colors.red : Colors.grey,
                       size: 30.0,
                     ),
                     onPressed: () {
                       setState(() {
-                        restaurant.isFavorite = !restaurant.isFavorite;
+                        restaurant.toggleFavorite();
                       });
                     },
                   ),

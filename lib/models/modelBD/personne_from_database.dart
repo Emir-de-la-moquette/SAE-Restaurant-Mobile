@@ -40,7 +40,7 @@ class PersonneDataBase{
 
   //delect
   Future DelectRestaurant(Personne personne) async{
-    await database.delete().eq('emailpersonne',personne.emailpersonne!);
+    await database.delete().eq('emailpersonne',personne.emailpersonne);
   }
 
 
