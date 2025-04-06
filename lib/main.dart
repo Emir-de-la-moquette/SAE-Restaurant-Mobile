@@ -12,7 +12,7 @@ import 'package:td2/viewmodels/settingsviewmodels.dart';
 import 'dart:async';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
-
+import './viewmodels/taskviewmodels.dart';
 
 import 'UI/connect.dart';
 import 'UI/map.dart';
@@ -88,11 +88,6 @@ class MyApp extends StatelessWidget {
             name: 'restaurant',
             path: '/restaurant/:id',
             builder: (context, state) => RestaurantUI(),
-          ),
-          GoRoute(
-            name: 'images',
-            path: '/images',
-            builder: (context, state) => Ecran2(),
           ),
           GoRoute(
             name: 'profil',

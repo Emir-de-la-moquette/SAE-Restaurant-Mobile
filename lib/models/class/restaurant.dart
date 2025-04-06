@@ -220,20 +220,6 @@ Future getNote() async{
   }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
 
 
