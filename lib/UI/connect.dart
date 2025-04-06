@@ -62,13 +62,6 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
-  void refreshPref(int jours) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    int expirationDate =
-        DateTime.now().add(Duration(days: jours)).millisecondsSinceEpoch;
-    await prefs.setInt('expiration', expirationDate);
-  }
-
   @override
   void initState() {
     super.initState();

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'home.dart';
 import 'mytheme.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../main.dart';
 import '../models/model.dart';
 
@@ -24,24 +23,37 @@ class _signupScreenState extends State<signupScreen> {
 
   void _signup(
       String nom, String prenom, String tel, String mail, String mdp) async {
-    context.go('/connexion');
-    if (userExist(mail)) {
+    if (_formKey.currentState!.validate()) {
+      // context.go('/connexion');
+      if (userExist(mail)) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Compte existant")),
+          SnackBar(content: Text("Compte déjà existant ❌")),
         );
+      } else {
+        if (inscription(nom, prenom, tel, mail, mdp)) {
+          refreshPref(7);
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text("Connexion réussie 🎉")),
+          );
+          context.go('/');
+        }
+      }
     }
   }
 
-  void refreshPref(int jours) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    int expirationDate =
-        DateTime.now().add(Duration(days: jours)).millisecondsSinceEpoch;
-    await prefs.setInt('expiration', expirationDate);
+  void _login() async {
+    context.go('/connexion');
   }
 
   @override
-  void initState() {
-    super.initState();
+  void dispose() {
+    _nomController.dispose();
+    _prenomController.dispose();
+    _telController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    _confirmPasswordController.dispose();
+    super.dispose();
   }
 
   @override
@@ -54,9 +66,10 @@ class _signupScreenState extends State<signupScreen> {
           key: _formKey,
           child: SingleChildScrollView(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisAlignment: MainAxisAlignment.center,
+              // crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                // Nom
+                // nom
                 TextFormField(
                   controller: _nomController,
                   decoration: InputDecoration(
@@ -72,7 +85,7 @@ class _signupScreenState extends State<signupScreen> {
                 ),
                 SizedBox(height: 16),
 
-                // Prénom
+                // preom
                 TextFormField(
                   controller: _prenomController,
                   decoration: InputDecoration(
@@ -88,7 +101,7 @@ class _signupScreenState extends State<signupScreen> {
                 ),
                 SizedBox(height: 16),
 
-                // Téléphone
+                // tel
                 TextFormField(
                   controller: _telController,
                   keyboardType: TextInputType.phone,
@@ -98,9 +111,11 @@ class _signupScreenState extends State<signupScreen> {
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return "Veuillez entrer votre numéro de téléphone";
+                      // return "Veuillez entrer votre numéro de téléphone";
+                      value = "";
+                      return null;
                     }
-                    if (!RegExp(r'^\+?\d{10,15}$').hasMatch(value)) {
+                    if (!RegExp(r'^\+?\d{8,15}$').hasMatch(value)) {
                       return "Numéro de téléphone invalide";
                     }
                     return null;
@@ -108,7 +123,7 @@ class _signupScreenState extends State<signupScreen> {
                 ),
                 SizedBox(height: 16),
 
-                // Email
+                // mail
                 TextFormField(
                   controller: _emailController,
                   keyboardType: TextInputType.emailAddress,
@@ -130,7 +145,7 @@ class _signupScreenState extends State<signupScreen> {
                 ),
                 SizedBox(height: 16),
 
-                // Mot de passe
+                // mdp
                 TextFormField(
                   controller: _passwordController,
                   obscureText: true,
@@ -142,15 +157,15 @@ class _signupScreenState extends State<signupScreen> {
                     if (value == null || value.isEmpty) {
                       return "Veuillez entrer un mot de passe";
                     }
-                    if (value.length < 6) {
-                      return "Le mot de passe doit contenir au moins 6 caractères";
-                    }
+                    // if (value.length < 6) {
+                    //   return "Le mot de passe doit contenir au moins 6 caractères";
+                    // }
                     return null;
                   },
                 ),
                 SizedBox(height: 16),
 
-                // Confirmation du mot de passe
+                // confirm mdp
                 TextFormField(
                   controller: _confirmPasswordController,
                   obscureText: true,
@@ -170,11 +185,28 @@ class _signupScreenState extends State<signupScreen> {
                 ),
                 SizedBox(height: 24),
 
-                // Bouton de validation
                 ElevatedButton(
-                  onPressed: _signup,
+                  onPressed: () {
+                    _signup(
+                      _nomController.text,
+                      _prenomController.text,
+                      _telController.text,
+                      _emailController.text,
+                      _passwordController.text,
+                    );
+                  },
                   child: Text("Créer un compte"),
                 ),
+                TextButton(
+                  onPressed: _login,
+                  child: Text(
+                    "Vous voulez vous connecter ?",
+                    style: TextStyle(
+                      decoration: TextDecoration.underline,
+                      color: Colors.blue,
+                    ),
+                  ),
+                )
               ],
             ),
           ),
