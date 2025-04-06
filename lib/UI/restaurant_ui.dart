@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:td2/UI/image_picker.dart';
 
-import '../models/note.dart';
-import '../models/restaurant.dart';
+import '../models/class/note.dart';
+import '../models/class/restaurant.dart';
 import './rating.dart';
 import './commentaire_ui.dart';
 import './map.dart';
@@ -93,13 +93,13 @@ class _RestaurantUIState extends State<RestaurantUI> {
 
             IconButton(
               icon: Icon(
-                this.resto.isFavorite ? Icons.favorite : Icons.favorite_border,
-                color: this.resto.isFavorite ? Colors.red : Colors.grey,
+                this.resto.isFavorite() ? Icons.favorite : Icons.favorite_border,
+                color: this.resto.isFavorite() ? Colors.red : Colors.grey,
                 size: 40.0,
               ),
               onPressed: () {
                 setState(() {
-                  this.resto.isFavorite = !this.resto.isFavorite;
+                  this.resto.toggleFavorite() ;
                 });
               },
             ),

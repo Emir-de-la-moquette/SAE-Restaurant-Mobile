@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../models/note.dart';
-import '../models/restaurant.dart';
+import '../models/class/note.dart';
+import '../models/class/restaurant.dart';
 
 class ListeResto extends StatefulWidget {
   @override
@@ -225,13 +225,15 @@ class _ListeRestoState extends State<ListeResto> {
                   ),
                   trailing: IconButton(
                     icon: Icon(
-                      restaurant.isFavorite ? Icons.favorite : Icons.favorite_border,
-                      color: restaurant.isFavorite ? Colors.red : Colors.grey,
+
+                      restaurant.isFavorite() ? Icons.favorite : Icons.favorite_border,
+
+                      color: restaurant.isFavorite() ? Colors.red : Colors.grey,
                       size: 30.0,
                     ),
                     onPressed: () {
                       setState(() {
-                        restaurant.isFavorite = !restaurant.isFavorite;
+                        restaurant.toggleFavorite();
                       });
                     },
                   ),

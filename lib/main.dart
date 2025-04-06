@@ -9,14 +9,11 @@ import 'package:td2/UI/liste_favori.dart';
 import 'package:td2/UI/mytheme.dart';
 import 'package:td2/UI/restaurant_ui.dart';
 import 'package:td2/viewmodels/settingsviewmodels.dart';
-import 'package:td2/viewmodels/taskviewmodels.dart';
 import 'dart:async';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
-import 'UI/card1.dart';
-import 'UI/card2.dart';
-//import 'UI/card3.dart';
+
 import 'UI/connect.dart';
 import 'UI/map.dart';
 import 'UI/liste_resto.dart';
