@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../models/class/note.dart';
+import '../models/note.dart';
 
 class CommentaireUI extends StatelessWidget {
   final List<Note> notes;
