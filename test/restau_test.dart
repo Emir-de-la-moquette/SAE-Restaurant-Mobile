@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:td2/models/restaurant.dart';
-import 'package:td2/models/note.dart';
+import 'package:td2/models/class/restaurant.dart';
+import 'package:td2/models/class/note.dart';
 
 void main() {
   group('Restaurant', () {
@@ -65,10 +65,10 @@ void main() {
     test('setState inverse correctement isFavorite', () {
       expect(restaurant.isFavorite, isFalse);
 
-      restaurant.setState();
+      restaurant.toggleFavorite();
       expect(restaurant.isFavorite, isTrue);
 
-      restaurant.setState();
+      restaurant.toggleFavorite();
       expect(restaurant.isFavorite, isFalse);
     });
   });
