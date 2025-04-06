@@ -21,6 +21,7 @@ import 'UI/connect.dart';
 import 'UI/map.dart';
 import 'UI/liste_resto.dart';
 import 'UI/settings.dart';
+import 'UI/signup.dart';
 import 'models/AuthService.dart';
 
 Future<void> main() async {
@@ -54,9 +55,10 @@ class MyApp extends StatelessWidget {
       final bool isAuthenticated = await AuthService.isUserLoggedIn();
 
       final bool isLoggingIn = state.fullPath == '/connexion';
+      final bool isSigningUp = state.fullPath == '/signup';
 
       // redirection si pas connecté
-      if (!isAuthenticated && !isLoggingIn) {
+      if (!isAuthenticated && !isLoggingIn && !isSigningUp) {
         return '/connexion';
       }
       return null;
