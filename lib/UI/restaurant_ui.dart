@@ -8,8 +8,7 @@ import './commentaire_ui.dart';
 import './map.dart';
 
 class RestaurantUI extends StatefulWidget {
-  final String osmId;
-  const RestaurantUI({Key? key, required this.osmId}) : super(key: key);
+  const RestaurantUI({super.key});
 
 
 
