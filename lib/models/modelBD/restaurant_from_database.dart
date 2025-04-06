@@ -55,11 +55,15 @@ class RestaurantDataBase{
 
   }
 
-  Future ConvertSelectToRestaurant(data)async {
+  Future<List<Restaurant>> ConvertSelectToRestaurant(data)async {
     List<Map<String, dynamic>> dataMapList = await ConvertSelectToMap(data);
     List<Restaurant> listeResto = [];
+
     for (var restaurant in dataMapList) {
       Restaurant rest = Restaurant.fromMap(restaurant);
+      rest.getCuisine();
+      rest.getNote();
+
       listeResto.add(rest);
     }
     return listeResto;
@@ -67,10 +71,11 @@ class RestaurantDataBase{
   }
 
 
-  Future selectRestaurantTotal() async{
+  Future<List<Restaurant>> selectRestaurantTotal() async{
     final response = await database.select();
     List<dynamic> data = response;
-    List<Map<String, dynamic>> dataMap = await ConvertSelectToMap(data);
+    List<Restaurant> dataMap = await ConvertSelectToRestaurant(data);
+    print(dataMap[0].cuisines);
     return dataMap;
   }
 

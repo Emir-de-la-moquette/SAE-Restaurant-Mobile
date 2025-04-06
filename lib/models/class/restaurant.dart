@@ -70,25 +70,26 @@ factory Restaurant.fromMap(Map<String, dynamic> map){
 return Restaurant(
   osmId: map['osmid'] as int,
   nomRestaurant : map['nomrestaurant'].toString(),
-  description: map['description'].toString(),
-  region: map['nomregion'].toString(),
-  departement: map['nomdepartement'].toString(),
-  ville: map['nomcommune'].toString(),
-  latitude: map['latitude'] as double,
-  longitude: map['longitude'] as double,
-  siteWeb: map['siteweb'].toString(),
-  facebook: map['facebook'].toString(),
-  telRestaurant: map['telrestaurant'].toString(),
-  nbEtoiles: map['nbetoilemichelin'] as double,
-  capacite: map['capacite'] as int,
-  fumeur: map['fumeur'] as bool,
-  drive: map['drive'] as bool,
-  aEmporter: map['aemporter'] as bool,
-  livraison: map['livraison'] as bool,
-  vegetarien: map['vegetarien'] as bool,
-  horairesOuverture: map['horairesouverture'] as String,
-  cuisines: map['nomcuisine'] as List<String>,
-  notes: map['notes'] as List<Note>,
+  description: map['description']?.toString() ?? '',
+  region: map['nomregion']?.toString() ?? '',
+  departement: map['nomdepartement']?.toString() ?? '',
+  ville: map['nomcommune']?.toString() ?? '',
+  latitude: map['latitude'] != null ? map['latitude'] as double : 0.0,
+  longitude: map['longitude'] != null ? map['longitude'] as double : 0.0,
+  siteWeb: map['siteweb']?.toString() ?? '',
+  facebook: map['facebook']?.toString() ?? '',
+  telRestaurant: map['telrestaurant']?.toString() ?? '',
+  nbEtoiles: map['nbetoilemichelin'] != null ? map['nbetoilemichelin'] as double : 0.0,
+  capacite: map['capacite'] != null ? map['capacite'] as int : 0,
+  fumeur: map['fumeur'] != null ? map['fumeur'] as bool : false,
+  drive: map['drive'] != null ? map['drive'] as bool : false,
+  aEmporter: map['aemporter'] != null ? map['aemporter'] as bool : false,
+  livraison: map['livraison'] != null ? map['livraison'] as bool : false,
+  vegetarien: map['vegetarien'] != null ? map['vegetarien'] as bool : false,
+  horairesOuverture: map['horairesouverture']?.toString() ?? '',
+  cuisines: map['nomcuisine'] != null ? List<String>.from(map['nomcuisine']) : [],
+  notes: map['notes'] != null ? List<Note>.from(map['notes']) : [],
+
 );
 
 }
@@ -140,29 +141,32 @@ void toggleFavorite() async{
 }
 
 Future getCuisine() async{
-    List<String> cuisine =[];
+    List<String> cuisinecourant=[];
     final response =  await Supabase.instance.client.from("preparer").select("nomcuisine").eq('osmid',this.osmId);
     if (response != {} && response.isNotEmpty) {
       for (var ligne in response) {
         String nomCuisine = ligne['nomcuisine'];
-        cuisine.add(nomCuisine);
-        print('Nom de la cuisine: $nomCuisine');
+        cuisinecourant.add(nomCuisine);
+        //print('Nom de la cuisine: $nomCuisine');
+
       }
+      this.cuisines = cuisinecourant;
+
     }
-    return cuisine;
   }
 
 Future getNote() async{
-  List<Note> notes =[];
   try {
     final response =  await Supabase.instance.client.from("noter").select().eq('osmid',this.osmId);
-    if (response != {} && response.isNotEmpty) {
 
+
+    if (response != {} && response.isNotEmpty) {
+      print(response);
       for (var ligne in response) {
         String emailpersonne = ligne['emailpersonne'];
         int lanote =0;
         try {
-          lanote = int.parse(ligne['note']);
+          lanote = ligne['note'];
         } catch (e) {
           print("Erreur lors de la conversion de la note : $lanote");
         }
@@ -170,7 +174,7 @@ Future getNote() async{
         String commentaire = ligne['commentaire'];
         String date = ligne['date'];
 
-        final response2 =  await Supabase.instance.client.from("noter").select("nompersonne,prenompersonne").eq('emailpersonne',emailpersonne);
+        final response2 =  await Supabase.instance.client.from("personne").select("nompersonne,prenompersonne").eq('emailpersonne',emailpersonne);
         String nompersonne = response2[0]['nompersonne'];
         String prenompersonne = response2[0]['prenompersonne'];
 
@@ -182,14 +186,14 @@ Future getNote() async{
           nomAuteur: nompersonne,
           prenomAuteur: prenompersonne,
         );
-        notes.add(note);
+        this.notes.add(note);
       }
     }
+
 
   } catch (e) {
     print("Erreur lors de la récupération des notes : $e");
   }
-  return notes;
 }
 
   Future creerNoteResto(lanote,commentaire,emailpersonne) async{
