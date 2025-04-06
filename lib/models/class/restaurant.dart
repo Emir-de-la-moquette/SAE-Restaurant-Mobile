@@ -120,7 +120,7 @@ return {
 
 
 
-isFavorite() async{
+  isFavorite() async{
     final response = await Supabase.instance.client.from("favori").select().eq('osmid',this.osmId);
 
     if (response != []){

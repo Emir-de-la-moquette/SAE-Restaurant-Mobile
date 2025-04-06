@@ -226,8 +226,11 @@ class _ListeFavoriState extends State<ListeFavori> {
                   ),
                   trailing: IconButton(
                     icon: Icon(
-                      restaurant.isFavorite() ? Icons.favorite : Icons.favorite_border,
-                      color: restaurant.isFavorite() ? Colors.red : Colors.grey,
+                      //todo
+                      Icons.favorite,
+                      //restaurant.isFavorite() ? Icons.favorite : Icons.favorite_border,
+                     // color: restaurant.isFavorite() ? Colors.red : Colors.grey,
+                      color: Colors.red,
                       size: 30.0,
                     ),
                     onPressed: () {

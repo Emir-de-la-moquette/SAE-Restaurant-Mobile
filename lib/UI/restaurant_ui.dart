@@ -93,8 +93,11 @@ class _RestaurantUIState extends State<RestaurantUI> {
 
             IconButton(
               icon: Icon(
-                this.resto.isFavorite() ? Icons.favorite : Icons.favorite_border,
-                color: this.resto.isFavorite() ? Colors.red : Colors.grey,
+                Icons.favorite,
+                //todo
+                //restaurant.isFavorite() ? Icons.favorite : Icons.favorite_border,
+                // color: restaurant.isFavorite() ? Colors.red : Colors.grey,
+                color: Colors.red,
                 size: 40.0,
               ),
               onPressed: () {

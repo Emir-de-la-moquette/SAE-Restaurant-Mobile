@@ -19,8 +19,15 @@ import 'UI/map.dart';
 import 'UI/liste_resto.dart';
 import 'UI/settings.dart';
 import 'models/AuthService.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+
 
 Future<void> main() async {
+  await Supabase.initialize(
+    url: 'https://vicnhizlpnnchlerpqtr.supabase.co',
+    anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZpY25oaXpscG5uY2hsZXJwcXRyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzczOTAyMjcsImV4cCI6MjA1Mjk2NjIyN30.3IrL5w_zVj6vL9iD3wlpb-kAALGZvFN_TXZgYMPMzag',
+  );
+
   WidgetsFlutterBinding.ensureInitialized();
   // Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
 
@@ -72,7 +79,7 @@ class MyApp extends StatelessWidget {
           GoRoute(
             name: 'home',
             path: '/',
-            builder: (context, state) => RestaurantUI(),
+            builder: (context, state) =>  RestaurantUI(),
           ),
           GoRoute(
             name: 'favoris',
