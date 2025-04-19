@@ -1,0 +1,30 @@
+import 'package:supabase_flutter/supabase_flutter.dart';
+
+
+final database = Supabase.instance.client;
+
+Future getPrefCuisine(mail) async {
+  final response = await database.from("PREFERER").select("nomCuisine").eq("emailpersonne", mail);
+
+}
+
+
+function getPrefCuisine($email){
+  global $connexion;
+  $requete = $connexion->prepare("SELECT nomCuisine FROM PREFERER WHERE EMailPersonne = ? ");
+  $requete->execute([$email]);
+  $result = $requete->fetchAll();
+  return $result;
+}
+
+Future ajoutePrefCuisine(email, cuisine) async {
+  final response = await database.from("PREFERER").select("nomCuisine").eq("emailpersonne", mail);
+
+}
+
+
+function ajoutePrefCuisine($email, $cuisine){
+  global $connexion;
+  $requete = $connexion->prepare("INSERT INTO PREFERER (EMailPersonne, nomCuisine) VALUES (?,?)");
+  $requete->execute([$email, $cuisine]);
+}

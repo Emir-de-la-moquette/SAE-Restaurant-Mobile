@@ -7,16 +7,14 @@ import './rating.dart';
 import './commentaire_ui.dart';
 import './map.dart';
 
-class RestaurantUI extends StatefulWidget {
-  const RestaurantUI({super.key});
-
-
+class Homes extends StatefulWidget {
+  const Homes({super.key});
 
   @override
   _RestaurantUIState createState() => _RestaurantUIState();
 }
 
-class _RestaurantUIState extends State<RestaurantUI> {
+class _RestaurantUIState extends State<Homes> {
   final TextEditingController _commentController = TextEditingController();
   double _userRating = 0; // Valeur par défaut de la note
 
@@ -61,6 +59,7 @@ class _RestaurantUIState extends State<RestaurantUI> {
       ),
     ],
   );
+
   /// 🔹 Fonction pour ajouter un commentaire
   void _ajouterCommentaire() {
     String commentaire = _commentController.text.trim();
@@ -69,7 +68,7 @@ class _RestaurantUIState extends State<RestaurantUI> {
       setState(() {
         resto.notes.add(Note(
           mail:
-          "nouveau.client@example.com", // À remplacer par le vrai utilisateur
+              "nouveau.client@example.com", // À remplacer par le vrai utilisateur
           note: _userRating.toInt(),
           commentaire: commentaire,
           date: DateTime.now().toString().split(' ')[0], // Date du jour
@@ -187,7 +186,7 @@ class _RestaurantUIState extends State<RestaurantUI> {
                   /// ⭐ **Sélection de la note**
                   const Text("Note :",
                       style:
-                      TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                   RatingScreen(
                     onRatingUpdate: (rating) {
                       setState(() {
@@ -221,7 +220,7 @@ class _RestaurantUIState extends State<RestaurantUI> {
             /// 📩 Liste des commentaires
             SizedBox(
               height:
-              300, // Définit une hauteur pour bien voir les commentaires
+                  300, // Définit une hauteur pour bien voir les commentaires
               child: CommentaireUI(notes: resto.notes),
             ),
           ],
