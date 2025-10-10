@@ -1,16 +1,10 @@
 # my_little_food
 
-A new Flutter project.
+Application mobile de referencement de restaurant.
 
-## Getting Started
+## SAÉ de BUT 2
 
-This project is a starting point for a Flutter application.
+basé sur le site web My little food, il s'agit d'une application mobile pour référencer des restaurants, obtenir des informations et en mettre en favoris. 
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Le site web utilise l'api google maps pour l'exploitation des données basées sur d'ancienne données OSM et aussi pour l'affichage des cartes.
